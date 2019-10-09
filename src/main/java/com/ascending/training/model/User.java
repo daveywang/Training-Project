@@ -7,32 +7,27 @@
 
 package com.ascending.training.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "employee")
-public class Employee {
-    public Employee() { }
-    public Employee(String name, String firstName, String lastName, String email, String address) {
+@Table(name = "users")
+public class User {
+    public User() { }
+    public User(String name, String firstName, String lastName, String email) {
         this.name = name;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.address = address;
     }
 
     @Id
-    //@SequenceGenerator(name = "employee_id_generator", sequenceName = "employee_id_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = SEQUENCE, generator = "employee_id_generator")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-
     @Column(name = "name")
     private String name;
 
@@ -44,25 +39,6 @@ public class Employee {
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "address")
-    private String address;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Set<Account> accounts;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -96,53 +72,21 @@ public class Employee {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Set<Account> getAccounts() {
-        try {
-            int size = accounts.size();
-        }
-        catch (Exception e) {
-            return null;
-        }
-
-        return accounts;
-    }
-
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return id == employee.id &&
-                name.equals(employee.name) &&
+        User employee = (User) o;
+        return  name.equals(employee.name) &&
                 Objects.equals(firstName, employee.firstName) &&
                 Objects.equals(lastName, employee.lastName) &&
-                Objects.equals(email, employee.email) &&
-                Objects.equals(address, employee.address);
+                Objects.equals(email, employee.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, firstName, lastName, email, address);
+        return Objects.hash(name, firstName, lastName, email);
     }
 
     @Override

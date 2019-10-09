@@ -18,7 +18,3 @@ import org.junit.runners.Suite;
 
 public class TestAll {
 }
-
-/*
-    mvn -Dtest=TestAll -Dorg.slf4j.simpleLogger.defaultLogLevel=error test
- */

@@ -4,14 +4,16 @@
 
 master branch maintains the latest code
 
-warm-up branch maintains the java models, jdbc, unit test. This branch code is for the first two classes.
+hibernate branch maintains the code that uses Hibernate to interact with the database instead of using JDBC. The code is built on the warm-up branch. This branch code is for the third and the fourth classes.
 
 The code demonstrates:
-1. how to access Database by using JDBC.
-2. how to use flyway to make changes on the database.
-3. how to use maven to compile, test the code.
-4. how to use logger to log different level information. 
-5. how to do unit test by using Junit.
+1. how to built Hibernate session factory.
+2. how to use code to configure Hibernate instead of using hibernate.cfg.xml or hibernate.properties configuration files.
+3. how to create mapping classes.
+4. how to use HQL to build DAOs to interact with database. 
+5. how to define relationship between entities.
+6. the differences between join and join fetch.
+7. using entities scanner to add all mapping classes into the Hibernate configuration.
 
 # Database Migration
 

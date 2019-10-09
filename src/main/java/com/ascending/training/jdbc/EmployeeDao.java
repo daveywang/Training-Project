@@ -29,7 +29,7 @@ public class EmployeeDao {
             rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                long id  = rs.getLong("id");
+                int id  = rs.getInt("id");
                 String name = rs.getString("name");
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");

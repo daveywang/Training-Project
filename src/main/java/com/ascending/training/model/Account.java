@@ -7,17 +7,43 @@
 
 package com.ascending.training.model;
 
-public class Account {
-    private long id;
-    private String accountType;
-    private float balance;
-    private long employeeId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-    public long getId() {
-        return id;
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@Table(name = "account")
+public class Account {
+    public  Account() {}
+    public  Account(String accountType, float balance) {
+        this.accountType = accountType;
+        this.balance = balance;
     }
 
-    public void setId(long id) {
+    @Id
+    //@SequenceGenerator(name="account_id_generator", sequenceName="account_id_seq", allocationSize = 1)
+    //@GeneratedValue(strategy=SEQUENCE, generator="account_id_generator")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name ="account_type")
+    private String accountType;
+
+    @Column(name = "balance")
+    private float balance;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,16 +62,41 @@ public class Account {
         this.balance = balance;
     }
 
-    public long getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id == account.id &&
+                Float.compare(account.balance, balance) == 0 &&
+                accountType.equals(account.accountType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, accountType, balance);
     }
 
     @Override
     public String toString() {
-        return String.format("[%d | %s | %f | %d]", id, accountType, balance, employeeId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String str = null;
+        try {
+            str = objectMapper.writeValueAsString(this);
+        }
+        catch(JsonProcessingException jpe) {
+            jpe.printStackTrace();
+        }
+
+        return str;
     }
 }

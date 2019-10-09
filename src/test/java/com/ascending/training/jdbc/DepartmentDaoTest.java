@@ -25,7 +25,7 @@ public class DepartmentDaoTest {
     @Test
     public void getDepartmentsTest() {
         List<Department> departments = departmentDao.getDepartments();
-        int expectedNumOfDept = 4;
+        int expectedNumOfDept = 5;
 
         for (Department department : departments) {
             System.out.println(department);
