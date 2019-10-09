@@ -5,7 +5,7 @@
  *  Date: 06/2019
  */
 
-package com.ascending.training.repository;
+package com.ascending.training.service;
 
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Account;
@@ -23,19 +23,18 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= AppInitializer.class)
-public class AccountDaoTest {
-    @Autowired
-    private AccountDao accountDao;
-    @Autowired
-    private Logger logger;
+public class AccountServiceTest {
+    @Autowired private AccountService accountService;
+    @Autowired private Logger logger;
 
     @Before
     public void init() {
+        //accountService = new AccountServiceImpl();
     }
 
     @Test
     public void getAccounts() {
-        List<Account> accounts = accountDao.getAccounts();
+        List<Account> accounts = accountService.getAccounts();
         int expectedNumOfDept = 5;
         accounts.forEach(acct -> logger.debug(acct.toString()));
         Assert.assertEquals(expectedNumOfDept, accounts.size());
@@ -44,7 +43,7 @@ public class AccountDaoTest {
     @Test
     public void getEmployeeById() {
         int id = 2;
-        Account account = accountDao.getAccountById(id);
+        Account account = accountService.getAccountById(id);
         Assert.assertEquals(id, account.getId());
         logger.debug(account.toString());
         Employee employee = account.getEmployee();

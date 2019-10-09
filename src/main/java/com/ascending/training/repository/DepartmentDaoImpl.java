@@ -16,12 +16,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class DepartmentDaoImpl implements DepartmentDao {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired private Logger logger;
 
     @Override
     public boolean save(Department department) {
@@ -119,7 +121,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     public Department getDepartmentByName(String deptName) {
         if (deptName == null) return null;
         String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
-                "fetch em.accounts where lower(dept.name) = :name";
+                     "fetch em.accounts where lower(dept.name) = :name";
         //String hql = "FROM Department as dept where lower(dept.name) = :name";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -156,9 +158,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
         if (deptName == null) return null;
 
         String hql = "FROM Department as dept " +
-                "left join dept.employees as ems " +
-                "left join ems.accounts as acnts " +
-                "where lower(dept.name) = :name";
+                     "left join dept.employees as ems " +
+                     "left join ems.accounts as acnts " +
+                     "where lower(dept.name) = :name";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query query = session.createQuery(hql);

@@ -5,11 +5,10 @@
  *  Date: 06/2019
  */
 
-package com.ascending.training.repository;
+package com.ascending.training.service;
 
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Department;
-import com.ascending.training.service.DepartmentService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,29 +22,27 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= AppInitializer.class)
-public class DepartmentDaoTest {
-    @Autowired
-    private DepartmentService departmentService;
-    @Autowired
-    private Logger logger;
+public class DepartmentServiceTest {
+    @Autowired private Logger logger;
+    @Autowired private DepartmentService departmentService;
 
     @Before
     public void init() {
-        //departmentDao = new DepartmentDaoImpl();
+        //departmentService = new DepartmentServiceImpl();
     }
 
     @Test
     public void getDepartments() {
         List<Department> departments = departmentService.getDepartments();
-        int expectedNumOfDept = 4;
+        int expectedNumOfDept = 3;
 
-        departments.forEach(dept -> System.out.println(dept));
+        departments.forEach(dept -> logger.info(dept.toString()));
         Assert.assertEquals(expectedNumOfDept, departments.size());
     }
 
     @Test
     public void getDepartmentByName() {
-        String deptName = "HR";
+        String deptName = "R&D";
         Department department = departmentService.getDepartmentByName(deptName);
 
         logger.info(department.toString());
@@ -77,6 +74,11 @@ public class DepartmentDaoTest {
     public void getDepartmentAndEmployeesAndAccountsTest() {
         String deptName = "R&D";
         List<Object[]> resultList = departmentService.getDepartmentAndEmployeesAndAccounts(deptName);
-        Assert.assertEquals(3, resultList.size());
+        Assert.assertEquals(4, resultList.size());
+    }
+
+    @Test
+    public void deleteDepartment() {
+        //departmentService.delete("HR");
     }
 }

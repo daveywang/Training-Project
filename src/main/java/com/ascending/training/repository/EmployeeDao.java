@@ -8,12 +8,12 @@
 package com.ascending.training.repository;
 
 import com.ascending.training.model.Employee;
+
 import java.util.List;
 
 public interface EmployeeDao {
-    void save(Employee employee);
+    boolean save(Employee employee, String deptName);
     int updateEmployeeAddress(String name, String address);
     List<Employee> getEmployees();
     Employee getEmployeeByName(String name);
-    Employee getEmployeeById(int id);
 }

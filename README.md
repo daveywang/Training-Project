@@ -4,16 +4,12 @@
 
 master branch maintains the latest code
 
-hibernate branch maintains the code that uses Hibernate to interact with the database instead of using JDBC. The code is built on the warm-up branch. This branch code is for the third and the fourth classes.
+spring-boot branch maintains the code that uses SpringBoot to implement Restful API. The code is built on the hibernate branch. This branch code is for the fifth and the sixth training classes.
 
 The code demonstrates:
-1. how to built Hibernate session factory.
-2. how to use code to configure Hibernate instead of using hibernate.cfg.xml or hibernate.properties configuration files.
-3. how to create mapping classes.
-4. how to use HQL to build DAOs to interact with database. 
-5. how to define relationship between entities.
-6. the differences between join and join fetch.
-7. using entities scanner to add all mapping classes into the Hibernate configuration.
+1. how to built Restful API by using Spring Boot.
+2. how to use DI by using Spring Boot.
+3. how to test Spring Boot application.
 
 # Database Migration
 

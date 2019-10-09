@@ -8,10 +8,11 @@
 package com.ascending.training.repository;
 
 import com.ascending.training.model.Account;
+
 import java.util.List;
 
 public interface AccountDao {
-    void save(Account account);
+    boolean save(Account account, String employeeName);
     List<Account> getAccounts();
     Account getAccountById(int id);
 }

@@ -8,6 +8,7 @@
 package com.ascending.training.repository;
 
 import com.ascending.training.model.Department;
+
 import java.util.List;
 
 public interface DepartmentDao {
