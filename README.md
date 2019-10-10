@@ -4,12 +4,13 @@
 
 master branch maintains the latest code
 
-jwt branch maintains the code that uses JWT to implement authentication and authorization for Restful API. The code is built on the spring-boot branch. This branch code is for the seventh and the eighth training classes.
+aws-s3-sqs branch maintains the code that uses AWS SDK to implement AWS S3 and AWS SQS functionalities. The code is built on the jwt branch. This branch code is for the ninth and the tenth training classes.
 
 The code demonstrates:
-1. how to secure your Restful API by using JWT and filter.
-2. how to implement authentication for Restful API.
-3. how to implement authorization for Restful API.
+1. how to integrate AWS S3 service.
+2. how to integrate AWS SQS service.
+3. how to implement file upload controller by using Spring Boot.
+4. how to implement file download controller by uing Spring Boot.
 
 # Database Migration
 

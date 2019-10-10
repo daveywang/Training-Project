@@ -28,7 +28,11 @@ public class DepartmentServiceTest {
 
     @Before
     public void init() {
-        //departmentService = new DepartmentServiceImpl();
+        //You can not use new to creat the departmentService object directly,
+        //as the DI is used to inject logger in DepartmentService, otherwise,
+        //logger can not be injected, then it will through NullPointException
+        //so, you have to use @Autowired inject the object departmentService
+        //departmentService = new DepartmentService();
     }
 
     @Test

@@ -14,14 +14,17 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         DepartmentServiceTest.class,
         EmployeeServiceTest.class,
-        AccountServiceTest.class
+        AccountServiceTest.class,
+        MessageServiceMockAWSTest.class,
+        FileServiceTest.class,
+        FileServiceMockAWSTest.class
 })
 
 public class TestAll {
 }
 
 /* command line run specific test suite by maven
-mvn test -Dtest=com.ascending.training.service.TestAll \
+mvn test -Dtest=com.ascending.training.repository.TestAll \
     -Ddatabase.driver=org.postgresql.Driver \
     -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect \
     -Ddatabase.url=jdbc:postgresql://localhost:5432/training_db \
