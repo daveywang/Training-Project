@@ -8,35 +8,59 @@
 package com.ascending.training.repository;
 
 
+import com.ascending.training.model.Role;
 import com.ascending.training.model.User;
-import org.junit.After;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoTest {
-    private UserDaoImpl userDao;
+    @Autowired
+    private Logger logger;
+    private UserDao userDao;
+    private RoleDao roleDao;
+    private String email;
+    private List<Role> roles = new ArrayList();
 
     @Before
     public void init() {
         userDao = new UserDaoImpl();
+        roleDao = new RoleDaoImpl();
+        email = "dwang@ascending.com";
+        roles.add(roleDao.getRoleByName("Manager"));
+        roles.add(roleDao.getRoleByName("User"));
     }
 
     @Test
-    public void getUsers() {
-        List<User> users = userDao.getUsers();
-        users.forEach(user -> System.out.println(user.toString()));
+    public void getUserByEmail() {
+        User user = userDao.getUserByEmail(email);
+        Assert.assertNotNull(user);
+        logger.debug(user.toString());
+    }
+
+    @Ignore
+    @Test
+    public void createUser() {
+        User user = new User();
+        user.setRoles(roles);
+        user.setName("jfang");
+        user.setFirstName("John");
+        user.setLastName("Fang");
+        user.setEmail("jfang@ascending.com");
+        user.setPassword("jfang123!@#$");
+        boolean result = userDao.save(user);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void save() {
-        User user = new User("dwang", "David", "Wang", "david.wang@ascending.com");
-        if (userDao.getUserByName("dwang") == null) userDao.save(user);
-    }
-
-    @After
-    public void cleanup() {
-        //Todo
+    public void encryptPassword() {
+        logger.debug("Hashed Password: " + DigestUtils.md5Hex("123456789"));
     }
 }

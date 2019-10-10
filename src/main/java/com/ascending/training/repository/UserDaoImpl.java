@@ -13,47 +13,57 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public class UserDaoImpl implements UserDao {
+    @Autowired private Logger logger;
 
-public class UserDaoImpl {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public void save(User user) {
+    @Override
+    public boolean save(User user) {
         Transaction transaction = null;
+        boolean isSuccess = true;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(user);
+            session.persist(user);
             transaction.commit();
         }
         catch (Exception e) {
+            isSuccess = false;
             if (transaction != null) transaction.rollback();
             logger.error(e.getMessage());
         }
 
-        logger.debug(String.format("The user %s was inserted into the table.", user.toString()));
+        if (isSuccess) logger.debug(String.format("The user %s was inserted into the table.", user.toString()));
+
+        return isSuccess;
     }
 
-    public List<User> getUsers() {
-        String hql = "FROM User";
+    @Override
+    public User getUserByEmail(String email) {
+        String hql = "FROM User as u where lower(u.email) = :email";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<User> query = session.createQuery(hql);
-            return query.list();
-        }
-    }
-
-    public User getUserByName(String name) {
-        String hql = "FROM User as user where user.name = :name";
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery(hql);
-            query.setParameter("name", name);
+            query.setParameter("email", email.toLowerCase());
 
             return query.uniqueResult();
         }
     }
-    
+
+    @Override
+    public User getUserByCredentials(String email, String password) {
+        String hql = "FROM User as u where lower(u.email) = :email and u.password = :password";
+        logger.debug(String.format("User email: %s, password: %s", email, password));
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery(hql);
+            query.setParameter("email", email.toLowerCase().trim());
+            query.setParameter("password", password);
+
+            return query.uniqueResult();
+        }
+    }
 }

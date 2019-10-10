@@ -21,7 +21,7 @@ public class TestAll {
 }
 
 /* command line run specific test suite by maven
-mvn test -Dtest=com.ascending.training.repository.TestAll \
+mvn test -Dtest=com.ascending.training.service.TestAll \
     -Ddatabase.driver=org.postgresql.Driver \
     -Ddatabase.dialect=org.hibernate.dialect.PostgreSQL9Dialect \
     -Ddatabase.url=jdbc:postgresql://localhost:5432/training_db \

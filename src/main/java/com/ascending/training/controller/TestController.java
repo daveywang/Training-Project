@@ -1,5 +1,8 @@
 /*
- * Copyright (C) 2019 Liwei Wang - All Rights Reserved
+ *  Copyright 2019, Liwei Wang <daveywang@live.com>.
+ *  All rights reserved.
+ *  Author: Liwei Wang
+ *  Date: 06/2019
  */
 
 package com.ascending.training.controller;

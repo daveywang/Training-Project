@@ -4,12 +4,12 @@
 
 master branch maintains the latest code
 
-spring-boot branch maintains the code that uses SpringBoot to implement Restful API. The code is built on the hibernate branch. This branch code is for the fifth and the sixth training classes.
+jwt branch maintains the code that uses JWT to implement authentication and authorization for Restful API. The code is built on the spring-boot branch. This branch code is for the seventh and the eighth training classes.
 
 The code demonstrates:
-1. how to built Restful API by using Spring Boot.
-2. how to use DI by using Spring Boot.
-3. how to test Spring Boot application.
+1. how to secure your Restful API by using JWT and filter.
+2. how to implement authentication for Restful API.
+3. how to implement authorization for Restful API.
 
 # Database Migration
 
