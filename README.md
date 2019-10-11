@@ -3,7 +3,7 @@
 # Branch information
 
 * [master branch](https://github.com/daveywang/Training-Project/tree/master) maintains the latest code
-* [warmup_branch](https://github.com/daveywang/Training-Project/tree/warmup) maintains the java models, jdbc, unit test
+* [warmup_branch](https://github.com/daveywang/Training-Project/tree/warm-up) maintains the java models, jdbc, unit test
 * [hibernate_branch](https://github.com/daveywang/Training-Project/tree/hibernate) maintains hibernate implementation
 * [springBoot_branch](https://github.com/daveywang/Training-Project/tree/spring-boot) maintains controllers implementation
 * [jwt_branch](https://github.com/daveywang/Training-Project/tree/jwt) maintains security implementation
