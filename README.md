@@ -2,15 +2,12 @@
 
 # Branch information
 
-master branch maintains the latest code
-
-aws-s3-sqs branch maintains the code that uses AWS SDK to implement AWS S3 and AWS SQS functionalities. The code is built on the jwt branch. This branch code is for the ninth and the tenth training classes.
-
-The code demonstrates:
-1. how to integrate AWS S3 service.
-2. how to integrate AWS SQS service.
-3. how to implement file upload controller by using Spring Boot.
-4. how to implement file download controller by uing Spring Boot.
+* [master branch](https://github.com/daveywang/Training-Project/tree/master) maintains the latest code
+* [warmup_branch](https://github.com/daveywang/Training-Project/tree/warmup) maintains the java models, jdbc, unit test
+* [hibernate_branch](https://github.com/daveywang/Training-Project/tree/hibernate) maintains hibernate implementation
+* [springBoot_branch](https://github.com/daveywang/Training-Project/tree/spring-boot) maintains controllers implementation
+* [jwt_branch](https://github.com/daveywang/Training-Project/tree/jwt) maintains security implementation
+* [aws-s3-sqs_branch](https://github.com/daveywang/Training-Project/tree/aws-s3-sqs)  maintains aws and third party implementation
 
 # Database Migration
 
