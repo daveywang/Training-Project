@@ -23,7 +23,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public void save(Employee employee) {
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             session.save(employee);
             transaction.commit();
@@ -41,7 +42,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
         int updatedCount = 0;
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Query<Employee> query = session.createQuery(hql);
             query.setParameter("name", name);
             query.setParameter("address", address);

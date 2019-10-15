@@ -23,7 +23,8 @@ public class UserDaoImpl {
     public void save(User user) {
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();

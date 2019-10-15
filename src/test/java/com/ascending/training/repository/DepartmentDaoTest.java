@@ -9,7 +9,7 @@ package com.ascending.training.repository;
 
 import com.ascending.training.model.Department;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class DepartmentDaoTest {
-    private DepartmentDao departmentDao;
+    private static DepartmentDao departmentDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Before
+    @BeforeClass
     public void init() {
         departmentDao = new DepartmentDaoImpl();
     }
@@ -30,7 +30,7 @@ public class DepartmentDaoTest {
         List<Department> departments = departmentDao.getDepartments();
         int expectedNumOfDept = 4;
 
-        departments.forEach(dept -> System.out.println(dept));
+        //departments.forEach(dept -> System.out.println(dept));
         Assert.assertEquals(expectedNumOfDept, departments.size());
     }
 

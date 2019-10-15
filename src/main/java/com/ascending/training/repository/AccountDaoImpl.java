@@ -23,7 +23,8 @@ public class AccountDaoImpl implements AccountDao {
     public void save(Account account) {
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try  {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             session.save(account);
             transaction.commit();

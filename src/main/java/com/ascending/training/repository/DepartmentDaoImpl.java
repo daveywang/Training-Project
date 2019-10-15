@@ -11,7 +11,6 @@ import com.ascending.training.model.Account;
 import com.ascending.training.model.Department;
 import com.ascending.training.model.Employee;
 import com.ascending.training.util.HibernateUtil;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -19,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DepartmentDaoImpl implements DepartmentDao {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -28,7 +28,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Transaction transaction = null;
         boolean isSuccess = true;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             session.save(department);
             transaction.commit();
@@ -49,7 +50,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Transaction transaction = null;
         boolean isSuccess = true;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(department);
             transaction.commit();
@@ -67,19 +69,20 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public boolean delete(String deptName) {
-        String hql = "DELETE Department where name = :deptName1";
+        String hql = "DELETE Department where name = :deptN";
         int deletedCount = 0;
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            //Query<Department> query = session.createQuery(hql);
-            //query.setParameter("deptName1", deptName);
-            //deletedCount = query.executeUpdate();
-            Department dept = getDepartmentByName(deptName);
-            session.delete(dept);
+            Query<Department> query = session.createQuery(hql);
+            query.setParameter("deptN", deptName);
+            deletedCount = query.executeUpdate();
+            //Department dept = getDepartmentByName(deptName);
+            //session.delete(dept);
             transaction.commit();
-            deletedCount = 1;
+            //deletedCount = 1;
         }
         catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -99,8 +102,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Department> query = session.createQuery(hql);
             //return query.list();
-            //return query.list().stream().distinct().collect(Collectors.toList());
-            return query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+            return query.list();//.stream().distinct().collect(Collectors.toList());
+            //return query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
     }
 
@@ -110,8 +113,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Department> query = session.createQuery(hql);
             //return query.list();
-            //return query.list().stream().distinct().collect(Collectors.toList());
-            return query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+            return query.list().stream().distinct().collect(Collectors.toList());
+            //return query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
     }
 
