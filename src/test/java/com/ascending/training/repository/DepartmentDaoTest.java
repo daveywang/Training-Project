@@ -7,7 +7,9 @@
 
 package com.ascending.training.repository;
 
+import com.ascending.training.model.Account;
 import com.ascending.training.model.Department;
+import com.ascending.training.model.Employee;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,22 +17,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Set;
 
 public class DepartmentDaoTest {
     private static DepartmentDao departmentDao;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @BeforeClass
-    public void init() {
+    public static void init() {
         departmentDao = new DepartmentDaoImpl();
     }
 
     @Test
     public void getDepartments() {
         List<Department> departments = departmentDao.getDepartments();
-        int expectedNumOfDept = 4;
+        int expectedNumOfDept = 6;
 
         //departments.forEach(dept -> System.out.println(dept));
+        Department department = departments.get(0);
+        Set<Employee> es = department.getEmployees();
+        for (Employee  e : es) {
+            Set<Account> as = e.getAccounts();
+            for (Account a : as) {
+                logger.info(a.getAccountType());
+            }
+        }
+        //logger.info(String.valueOf(department.getEmployees()));
         Assert.assertEquals(expectedNumOfDept, departments.size());
     }
 
@@ -68,6 +80,6 @@ public class DepartmentDaoTest {
     public void getDepartmentAndEmployeesAndAccountsTest() {
         String deptName = "R&D";
         List<Object[]> resultList = departmentDao.getDepartmentAndEmployeesAndAccounts(deptName);
-        Assert.assertEquals(3, resultList.size());
+        Assert.assertEquals(2, resultList.size());
     }
 }
