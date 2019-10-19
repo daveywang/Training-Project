@@ -78,7 +78,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
             Query<Employee> query = session.createQuery(hql);
             query.setParameter("name", name);
 
-            return query.uniqueResult();
+            Employee employee = query.uniqueResult();
+
+            logger.info(employee.getDepartment().toString());
+
+            return employee;
+        }
+    }
+
+    @Override
+    public List<Employee> getEmployeeByDepartmentName(String name) {
+        String hql = "FROM Employee as em where em.department.name = :name";
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Employee> query = session.createQuery(hql);
+            query.setParameter("name", name);
+            List<Employee> employees = query.list();
+            employees.forEach(System.out::println);
+
+            return employees;
         }
     }
 

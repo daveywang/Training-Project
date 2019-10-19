@@ -16,4 +16,5 @@ public interface EmployeeDao {
     List<Employee> getEmployees();
     Employee getEmployeeByName(String name);
     Employee getEmployeeById(int id);
+    public List<Employee> getEmployeeByDepartmentName(String name);
 }

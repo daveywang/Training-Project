@@ -45,6 +45,20 @@ public class EmployeeDaoTest {
     }
 
     @Test
+    public void getEmployeeByName() {
+        String name = "dwang";
+        Employee employee = employeeDao.getEmployeeByName(name);
+        Assert.assertNotNull(employee);
+    }
+
+    @Test
+    public void getEmployeeByDepartmentName() {
+        String name = "HR";
+        List<Employee> employees = employeeDao.getEmployeeByDepartmentName(name);
+        Assert.assertNotNull(employees);
+    }
+
+    @Test
     public void updateEmployeeAddress() {
         String name = "dwang";
         String address = "11126 Fairhaven Court, Fairfax, VA";
