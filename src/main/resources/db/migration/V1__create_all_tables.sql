@@ -38,7 +38,7 @@ CREATE TABLE account (
     /*id             INTEGER NOT NULL default nextval('account_id_seq'),*/
     id             SERIAL NOT NULL,
     account_type   VARCHAR(30),
-    balance        NUMERIC(10, 2),
+    balance        FLOAT,
     create_date    date default CURRENT_DATE,
     employee_id    INTEGER NOT NULL
 );

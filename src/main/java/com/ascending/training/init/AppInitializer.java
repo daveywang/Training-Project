@@ -7,6 +7,7 @@
 
 package com.ascending.training.init;
 
+import com.ascending.training.util.HibernateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InjectionPoint;
@@ -52,7 +53,11 @@ import org.springframework.context.annotation.Scope;
 @SpringBootApplication(scanBasePackages = {"com.ascending.training"})
 @ServletComponentScan(basePackages = {"com.ascending.training.filter"})
 public class AppInitializer {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NullPointerException{
+        if (HibernateUtil.getSessionFactory() == null) {
+            throw new NullPointerException("The Hibernate session factory is NULL!");
+        }
+
         SpringApplication.run(AppInitializer.class, args);
     }
 

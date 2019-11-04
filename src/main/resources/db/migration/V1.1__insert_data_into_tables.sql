@@ -15,9 +15,9 @@ insert into employee (name, first_name, last_name, email, address, department_id
 commit;
 
 insert into account (account_type, balance, employee_id) values
-('checking', 999999.99, 1),
-('saving', 999999.99, 2),
-('checking', 999999.99, 3),
-('saving', 999999.99, 4)
+('checking', 999999.59, 1),
+('saving', 999999.59, 2),
+('checking', 999999.59, 3),
+('saving', 999999.59, 4)
 ;
 commit;

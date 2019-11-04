@@ -22,7 +22,7 @@ public class Role {
     //@SequenceGenerator(name = "role_id_generator", sequenceName = "role_id_seq", allocationSize = 1)
     //@GeneratedValue(strategy = SEQUENCE, generator = "role_id_generator")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -53,11 +53,11 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
