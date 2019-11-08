@@ -7,6 +7,7 @@
 
 package com.ascending.training.util;
 
+import com.ascending.training.interceptor.HibernateInterceptor;
 import com.github.fluent.hibernate.cfg.scanner.EntityScanner;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -51,6 +52,7 @@ public class HibernateUtil {
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.HBM2DDL_AUTO, "validate");
                 configuration.setProperties(settings);
+                configuration.setInterceptor(new HibernateInterceptor());
 
                 EntityScanner.scanPackages(modelPackages).addTo(configuration);
                 StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
