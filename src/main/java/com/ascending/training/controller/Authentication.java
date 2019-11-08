@@ -13,10 +13,7 @@ import com.ascending.training.util.JwtUtil;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,5 +45,14 @@ public class Authentication {
         }
 
         return ResponseEntity.status(HttpServletResponse.SC_OK).body(tokenKeyWord + ":" + tokenType + " " + token);
+    }
+
+    @RequestMapping(value = "/token", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity authenticate(@RequestParam String email, @RequestParam String password) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        logger.debug(user.toString());
+        return authenticate(user);
     }
 }

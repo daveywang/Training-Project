@@ -28,7 +28,7 @@ public class DepartmentController {
         return departments;
     }
 
-    @RequestMapping(value = "/with-children", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE})
+    @RequestMapping(value = "/with-children", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Department> getDepartmentsWithChildren() {
         List<Department> departments = departmentService.getDepartmentsWithChildren();
         return departments;
