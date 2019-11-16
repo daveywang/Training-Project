@@ -11,6 +11,8 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+/* SCOPE_SINGLETON is default scope, it can be omitted */
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class MessageService {
     @Autowired
     private Logger logger;

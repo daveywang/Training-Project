@@ -10,9 +10,13 @@ package com.ascending.training.service;
 import com.ascending.training.model.User;
 import com.ascending.training.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+/* SCOPE_SINGLETON is default scope, it can be omitted */
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class UserService {
     @Autowired private UserDao userDao;
 

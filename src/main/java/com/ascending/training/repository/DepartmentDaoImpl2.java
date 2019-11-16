@@ -17,15 +17,13 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-@Primary
-public class DepartmentDaoImpl implements DepartmentDao {
+public class DepartmentDaoImpl2 implements DepartmentDao {
     @Autowired private Logger logger;
     @Autowired private SessionFactory sessionFactory;
 

@@ -16,8 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
+//@Scope(value = WebApplicationContext.SCOPE_APPLICATION)
+//@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @RequestMapping(value = {"/auth"})
 public class Authentication {
     @Autowired private Logger logger;
@@ -26,14 +30,24 @@ public class Authentication {
     private String tokenKeyWord = "Authorization";
     private String tokenType = "Bearer";
 
+//    public Authentication() {
+//        System.out.println("################ Authentication is instantiated ################");
+//    }
+
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity authenticate(@RequestBody User user) {
         String token = "";
+        Map<String, String> msgMap = new HashMap();
 
         try {
             logger.debug(user.toString());
             User u = userService.getUserByCredentials(user.getEmail(), user.getPassword());
-            if (u == null) return ResponseEntity.status(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION).body(errorMsg);
+
+            if (u == null) {
+                msgMap.put("error", errorMsg);
+                return ResponseEntity.status(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION).body(msgMap);
+            }
+
             logger.debug(u.toString());
             token = JwtUtil.generateToken(u);
         }
@@ -41,10 +55,12 @@ public class Authentication {
             String msg = e.getMessage();
             if (msg == null) msg = "BAD REQUEST!";
             logger.error(msg);
+            msgMap.put("error", msg);
             return ResponseEntity.status(HttpServletResponse.SC_BAD_REQUEST).body(msg);
         }
 
-        return ResponseEntity.status(HttpServletResponse.SC_OK).body(tokenKeyWord + ":" + tokenType + " " + token);
+        msgMap.put(tokenKeyWord, tokenType + " " + token);
+        return ResponseEntity.status(HttpServletResponse.SC_OK).body(msgMap);
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.GET, produces = "application/json")
@@ -52,7 +68,6 @@ public class Authentication {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        logger.debug(user.toString());
         return authenticate(user);
     }
 }

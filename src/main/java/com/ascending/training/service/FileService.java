@@ -13,6 +13,8 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
+/* SCOPE_SINGLETON is default scope, it can be omitted */
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class FileService {
     @Autowired
     private Logger logger;

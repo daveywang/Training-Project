@@ -11,6 +11,7 @@ import com.ascending.training.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -31,6 +32,16 @@ public class SecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
+
+        ((HttpServletResponse)response).addHeader("Access-Control-Allow-Origin", "*");
+        ((HttpServletResponse)response).addHeader("Access-Control-Allow-Headers", "*");
+        ((HttpServletResponse)response).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD");
+
+        if (req.getMethod().equals(RequestMethod.OPTIONS.toString())) {
+            ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_ACCEPTED);
+            return;
+        }
+
         int statusCode = authorization(req);
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(request, response);
         else ((HttpServletResponse)response).sendError(statusCode);
@@ -69,7 +80,9 @@ public class SecurityFilter implements Filter {
             logger.debug(String.format("Verb: %s, allowed resources: %s", verb, allowedResources));
         }
         catch (Exception e) {
-            logger.error(e.getMessage());
+            String msg = e.getMessage();
+            if (msg == null) msg = "No valid token found.";
+            logger.error(msg);
         }
 
         return statusCode;

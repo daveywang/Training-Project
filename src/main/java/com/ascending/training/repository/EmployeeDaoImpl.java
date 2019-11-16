@@ -9,9 +9,8 @@ package com.ascending.training.repository;
 
 import com.ascending.training.model.Department;
 import com.ascending.training.model.Employee;
-import com.ascending.training.util.HibernateUtil;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -19,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao {
     @Autowired private Logger logger;
+    @Autowired private SessionFactory sessionFactory;
     @Autowired private DepartmentDao departmentDao;
 
     @Override
@@ -30,7 +31,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         Transaction transaction = null;
         boolean isSuccess = false;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Department department = departmentDao.getDepartmentByName(deptName);
 
             if (department != null) {
@@ -59,7 +60,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         int updatedCount = 0;
         Transaction transaction = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Employee> query = session.createQuery(hql);
             query.setParameter("name", name);
             query.setParameter("address", address);
@@ -82,9 +83,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public List<Employee> getEmployees() {
         String hql = "FROM Employee em left join fetch em.accounts";
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Employee> query = session.createQuery(hql);
-            return query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+            return query.list().stream().distinct().collect(Collectors.toList());
+            //return query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         }
     }
 
@@ -92,7 +94,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public Employee getEmployeeByName(String name) {
         String hql = "FROM Employee as em left join fetch em.accounts where em.name = :name";
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Employee> query = session.createQuery(hql);
             query.setParameter("name", name);
 
