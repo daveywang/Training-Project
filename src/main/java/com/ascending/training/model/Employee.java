@@ -11,20 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Employee {
-    private long id;
+    private int id;
     private String name;
     private String firstName;
     private String lastName;
     private String email;
     private String address;
-    private long departmentId;
+    private int departmentId;
     private List<Account> accounts = new ArrayList();
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -72,7 +72,7 @@ public class Employee {
         return departmentId;
     }
 
-    public void setDepartmentId(long departmentId) {
+    public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
 

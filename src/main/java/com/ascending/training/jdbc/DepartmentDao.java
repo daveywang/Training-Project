@@ -44,7 +44,7 @@ public class DepartmentDao {
             //STEP 4: Extract data from result set
             while(rs.next()) {
                 //Retrieve by column name
-                long id  = rs.getLong("id");
+                int id  = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 String location = rs.getString("location");

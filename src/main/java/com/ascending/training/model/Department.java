@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Department {
-    private long id;
+    private int id;
     private String name;
     private String description;
     private String location;
@@ -22,7 +22,7 @@ public class Department {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

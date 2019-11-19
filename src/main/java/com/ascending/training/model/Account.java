@@ -8,16 +8,16 @@
 package com.ascending.training.model;
 
 public class Account {
-    private long id;
+    private int id;
     private String accountType;
     private float balance;
-    private long employeeId;
+    private int employeeId;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,11 +36,11 @@ public class Account {
         this.balance = balance;
     }
 
-    public long getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(long employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
