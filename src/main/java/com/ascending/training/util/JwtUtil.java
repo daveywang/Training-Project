@@ -30,6 +30,7 @@ public class JwtUtil {
     private static final long EXPIRATION_TIME = 86400 * 1000;
 
     public static String generateToken(User user) {
+        logger.debug(user.toString());
         //JWT signature algorithm using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         //Sign JWT with SECRET_KEY

@@ -7,15 +7,17 @@
 
 package com.ascending.training.controller;
 
+import com.ascending.training.exception.AuthenticationException;
+import com.ascending.training.exception.UserNotFoundException;
 import com.ascending.training.model.User;
 import com.ascending.training.service.UserService;
 import com.ascending.training.util.JwtUtil;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,37 +32,26 @@ public class Authentication {
     private String tokenKeyWord = "Authorization";
     private String tokenType = "Bearer";
 
-//    public Authentication() {
-//        System.out.println("################ Authentication is instantiated ################");
-//    }
-
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity authenticate(@RequestBody User user) {
         String token = "";
-        Map<String, String> msgMap = new HashMap();
 
         try {
             logger.debug(user.toString());
             User u = userService.getUserByCredentials(user.getEmail(), user.getPassword());
-
-            if (u == null) {
-                msgMap.put("error", errorMsg);
-                return ResponseEntity.status(HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION).body(msgMap);
-            }
-
-            logger.debug(u.toString());
+            if (u == null) throw new UserNotFoundException(user);
             token = JwtUtil.generateToken(u);
         }
+        catch (UserNotFoundException userNotFoundexception) {
+            throw userNotFoundexception;
+        }
         catch (Exception e) {
-            String msg = e.getMessage();
-            if (msg == null) msg = "BAD REQUEST!";
-            logger.error(msg);
-            msgMap.put("error", msg);
-            return ResponseEntity.status(HttpServletResponse.SC_BAD_REQUEST).body(msg);
+            throw new AuthenticationException(e.getMessage(), user);
         }
 
-        msgMap.put(tokenKeyWord, tokenType + " " + token);
-        return ResponseEntity.status(HttpServletResponse.SC_OK).body(msgMap);
+        Map<String, String> map = new HashMap();
+        map.put(tokenKeyWord, tokenType + " " + token);
+        return ResponseEntity.status(HttpStatus.OK).body(map);
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.GET, produces = "application/json")
