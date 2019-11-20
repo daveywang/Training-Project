@@ -17,7 +17,6 @@ public class Employee {
     private String lastName;
     private String email;
     private String address;
-    private int departmentId;
     private List<Account> accounts = new ArrayList();
 
     public int getId() {
@@ -68,14 +67,6 @@ public class Employee {
         this.address = address;
     }
 
-    public long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
-
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -86,6 +77,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return String.format("[%d | %s | %s | %s | %s | %s | %d]", id, name, firstName, lastName, email, address, departmentId);
+        return String.format("[%d | %s | %s | %s | %s | %s ]", id, name, firstName, lastName, email, address);
     }
 }

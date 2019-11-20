@@ -18,27 +18,12 @@ public class Department {
     private String location;
     private List<Employee> employees = new ArrayList();
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Department that = (Department) o;
-        return id == that.id &&
-                name.equals(that.name) &&
-                location.equals(that.location);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, location);
     }
 
     public String getName() {
@@ -71,6 +56,21 @@ public class Department {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return id == that.id &&
+                name.equals(that.name) &&
+                location.equals(that.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, location);
     }
 
     @Override

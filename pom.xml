@@ -22,29 +22,19 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <flyway.version>6.0.4</flyway.version>
+    <flyway.version>6.0.8</flyway.version>
+    <database.driver>org.postgresql.Driver</database.driver>
+    <database.url>jdbc:postgresql://localhost:5432/training_db</database.url>
+    <!--
+    if there is no database.user and database.password properties defined,
+    we can pass these properties through command line,
+    for example, mvn -Ddatabase.user=admin -Ddatabase.password=Training123! flyway:migrate
+    -->
+    <database.user>${database.user}</database.user>
+    <database.password>Training123!</database.password>
   </properties>
 
-  <!--
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.5.RELEASE</version>
-    <relativePath />
-  </parent>
-  -->
-
   <dependencies>
-    <!--
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -56,7 +46,6 @@
       <artifactId>postgresql</artifactId>
       <version>42.2.5</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -112,10 +101,10 @@
           <artifactId>flyway-maven-plugin</artifactId>
           <version>${flyway.version}</version>
           <configuration>
-            <driver>org.postgresql.Driver</driver>
-            <url>jdbc:postgresql://localhost:5432/training_db</url>
-            <user>admin</user>
-            <password>Training123!</password>
+            <driver>${database.driver}</driver>
+            <url>${database.url}</url>
+            <user>${database.user}</user>
+            <password>${database.password}</password>
             <schemas>
               <schema>public</schema>
             </schemas>

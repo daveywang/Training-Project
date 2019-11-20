@@ -24,7 +24,7 @@ public class DepartmentDao {
     private static final String PASS = "Training123!";
 
     public List<Department> getDepartments() {
-        logger.info("Enter the method getDepartment");
+        logger.info("Enter the method getDepartments...");
         List<Department> departments = new ArrayList();
         Connection conn = null;
         Statement stmt = null;
@@ -32,11 +32,11 @@ public class DepartmentDao {
 
         try {
             //STEP 2: Open a connection
-            System.out.println("Connecting to database...");
+            logger.info("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //STEP 3: Execute a query
-            System.out.println("Creating statement...");
+            logger.info("Creating statement...");
             stmt = conn.createStatement();
             String sql = "SELECT * FROM department";
             rs = stmt.executeQuery(sql);
@@ -79,7 +79,7 @@ public class DepartmentDao {
 //        logger.info("Info - Department size = " + departments.size());
 //        logger.warn("Warn - Department size = " + departments.size());
 //        logger.error("Error - Department size = " + departments.size());
-        logger.info("Exit the method getDepartment");
+        logger.info("Exit the method getDepartments");
         return departments;
     }
 
