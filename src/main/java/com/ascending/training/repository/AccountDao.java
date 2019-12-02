@@ -15,4 +15,5 @@ public interface AccountDao {
     boolean save(Account account, String employeeName);
     List<Account> getAccounts();
     Account getAccountById(int id);
+    public void transferMoney(int accountFrom, int accountTo, double totalMoney);
 }

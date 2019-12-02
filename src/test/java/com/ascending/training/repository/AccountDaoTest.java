@@ -50,4 +50,9 @@ public class AccountDaoTest {
         Employee employee = account.getEmployee();
         logger.debug(employee.getEmail());
     }
+
+    @Test
+    public void transferMoneyTest() {
+        accountDao.transferMoney(1, 2, 100.00f);
+    }
 }

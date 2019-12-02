@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,6 +76,22 @@ public class AccountDaoImpl implements AccountDao {
             query.setParameter("id", id);
 
             return query.uniqueResult();
+        }
+    }
+
+    public void transferMoney(int accountFrom, int accountTo, double totalMoney) {
+        try (Session session = sessionFactory.openSession()) {
+            StoredProcedureQuery query = session.createStoredProcedureQuery("transfer");
+            query.registerStoredProcedureParameter("accountFrom", Integer.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("accountTo", Integer.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("totalMoney", Double.class, ParameterMode.IN);
+            query.setParameter("accountFrom", accountFrom);
+            query.setParameter("accountTo", accountTo);
+            query.setParameter("totalMoney", totalMoney);
+            query.execute();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
