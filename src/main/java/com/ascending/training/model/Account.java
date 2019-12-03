@@ -33,7 +33,7 @@ public class Account {
     private String accountType;
 
     @Column(name = "balance")
-    private float balance;
+    private double balance;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,11 +54,11 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -77,7 +77,7 @@ public class Account {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return id == account.id &&
-                Float.compare(account.balance, balance) == 0 &&
+                Double.compare(account.balance, balance) == 0 &&
                 accountType.equals(account.accountType);
     }
 
