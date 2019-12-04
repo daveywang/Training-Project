@@ -60,7 +60,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Transaction transaction = null;
         boolean isSuccess = true;
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(department);
             transaction.commit();
@@ -82,7 +83,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         int deletedCount = 0;
         Transaction transaction = null;
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
             transaction = session.beginTransaction();
             //Query<Department> query = session.createQuery(hql);
             //query.setParameter("deptName1", deptName);
@@ -133,12 +135,14 @@ public class DepartmentDaoImpl implements DepartmentDao {
                      "fetch em.accounts where lower(dept.name) = :name";
         //String hql = "FROM Department as dept where lower(dept.name) = :name";
 
-        try (Session session = sessionFactory.openSession()) {
-            Query<Department> query = session.createQuery(hql);
-            query.setParameter("name", deptName.toLowerCase());
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Query<Department> query = session.createQuery(hql);
+        query.setParameter("name", deptName.toLowerCase());
+        Department department = query.uniqueResult();
+        transaction.commit();
 
-            return query.uniqueResult();
-        }
+        return department;
     }
 
     @Override

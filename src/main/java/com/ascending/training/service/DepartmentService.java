@@ -11,7 +11,6 @@ import com.ascending.training.model.Department;
 import com.ascending.training.repository.DepartmentDao;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class DepartmentService {
     private Logger logger;
 
     @Autowired
-    @Qualifier("departmentDaoImpl2")
+    //@Qualifier("departmentDaoImpl2")
     private DepartmentDao departmentDao;
 
     public boolean save(Department department) {
