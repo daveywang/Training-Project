@@ -10,6 +10,9 @@ package com.ascending.training.init;
 import com.ascending.training.util.HibernateUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
@@ -55,7 +58,15 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
     6. Web Identity Token credentials from the environment or container.
  */
 
-@SpringBootApplication(scanBasePackages = {"com.ascending.training"})
+/*
+    If the dependency spring-boot-starter-data-jpa is in pom.xml, the datasource will be configured automatically,
+    but it can be disabled by using exclude to exclude all the classes related to the datasource, database connection.
+ */
+@SpringBootApplication(scanBasePackages = {"com.ascending.training"},
+                       exclude = {
+                       DataSourceAutoConfiguration.class,
+                       DataSourceTransactionManagerAutoConfiguration.class,
+                       HibernateJpaAutoConfiguration.class})
 @ServletComponentScan(basePackages = {"com.ascending.training.filter"})
 public class AppInitializer extends SpringBootServletInitializer {
     public static void main(String[] args) throws NullPointerException{
