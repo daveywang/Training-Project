@@ -29,7 +29,7 @@ public class AccountDaoTest {
     @Test
     public void getAccounts() {
         List<Account> accounts = accountDao.getAccounts();
-        int expectedNumOfDept = 5;
+        int expectedNumOfDept = 6;
 
         for (Account account : accounts) {
             System.out.println(account);

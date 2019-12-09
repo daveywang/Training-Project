@@ -31,7 +31,7 @@ public class DepartmentDaoTest {
     @Test
     public void getDepartments() {
         List<Department> departments = departmentDao.getDepartments();
-        int expectedNumOfDept = 6;
+        int expectedNumOfDept = 8;
 
         //departments.forEach(dept -> System.out.println(dept));
         Department department = departments.get(0);
@@ -80,6 +80,6 @@ public class DepartmentDaoTest {
     public void getDepartmentAndEmployeesAndAccountsTest() {
         String deptName = "R&D";
         List<Object[]> resultList = departmentDao.getDepartmentAndEmployeesAndAccounts(deptName);
-        Assert.assertEquals(2, resultList.size());
+        Assert.assertEquals(4, resultList.size());
     }
 }

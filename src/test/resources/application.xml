@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Put your comments here</comment>
+    <entry key="spring.datasource.driver-class-name">org.postgresql.Driver</entry>
+    <entry key="spring.datasource.url">jdbc:postgresql://localhost:5432/training_db</entry>
+    <entry key="spring.datasource.username">admin</entry>
+    <entry key="spring.datasource.password">Training123!</entry>
+</properties>

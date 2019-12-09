@@ -10,7 +10,7 @@ package com.ascending.training.repository;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Department;
 import com.ascending.training.model.Employee;
-import com.ascending.training.util.HibernateUtil;
+import com.ascending.training.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -96,9 +96,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public List<Department> getDepartments() {
-        //String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
+        String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
         //String hql = "FROM Department as dept left join fetch dept.employees";
-        String hql = "FROM Department";
+        //String hql = "FROM Department";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Department> query = session.createQuery(hql);
             //return query.list();
@@ -108,8 +108,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     public List<Department> getDepartmentsWithChildren() {
-        String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
-        //String hql = "FROM Department as dept left join fetch dept.employees";
+        //String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
+        String hql = "FROM Department as dept left join fetch dept.employees";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Department> query = session.createQuery(hql);
             //return query.list();

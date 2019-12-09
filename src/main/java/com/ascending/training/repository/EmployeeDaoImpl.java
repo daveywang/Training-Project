@@ -8,7 +8,7 @@
 package com.ascending.training.repository;
 
 import com.ascending.training.model.Employee;
-import com.ascending.training.util.HibernateUtil;
+import com.ascending.training.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -80,7 +80,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             Employee employee = query.uniqueResult();
 
-            logger.info(employee.getDepartment().toString());
+            //logger.info(employee.getDepartment().toString());
 
             return employee;
         }

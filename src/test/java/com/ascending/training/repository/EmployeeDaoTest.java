@@ -32,7 +32,7 @@ public class EmployeeDaoTest {
     @Test
     public void getEmployees() {
         List<Employee> employees = employeeDao.getEmployees();
-        int expectedNumOfDept = 6;
+        int expectedNumOfDept = 7;
         employees.forEach(em -> System.out.println(em.toString()));
         Assert.assertEquals(expectedNumOfDept, employees.size());
     }
@@ -61,7 +61,7 @@ public class EmployeeDaoTest {
     @Test
     public void updateEmployeeAddress() {
         String name = "dwang";
-        String address = "11126 Fairhaven Court, Fairfax, VA";
+        String address = "999 Washington Ave, Fairfax, VA 22030";
         employeeDao.updateEmployeeAddress(name, address);
         Employee employee = employeeDao.getEmployeeByName(name);
         Assert.assertEquals(address, employee.getAddress());
