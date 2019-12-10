@@ -17,8 +17,29 @@ import java.util.List;
 
 @Service
 public class DepartmentService {
-    @Autowired private Logger logger;
-    @Autowired private DepartmentDao departmentDao;
+    /* Filed injection */
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private DepartmentDao departmentDao;
+
+    /* Constructor injection*/
+    @Autowired
+    public DepartmentService(Logger logger, DepartmentDao departmentDao) {
+        this.logger = logger;
+        this.departmentDao = departmentDao;
+    }
+
+    /* Setter injection */
+//    @Autowired
+//    public void setLogger(Logger logger) {
+//        this.logger = logger;
+//    }
+//
+//    @Autowired
+//    public  void setDepartmentDao(DepartmentDao departmentDao) {
+//        this.departmentDao = departmentDao;
+//    }
 
     public boolean save(Department department) {
         return departmentDao.save(department);

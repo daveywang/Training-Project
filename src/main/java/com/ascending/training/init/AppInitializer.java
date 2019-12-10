@@ -7,7 +7,7 @@
 
 package com.ascending.training.init;
 
-import com.ascending.training.util.HibernateUtil;
+import com.ascending.training.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InjectionPoint;

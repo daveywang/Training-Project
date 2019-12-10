@@ -10,7 +10,7 @@ package com.ascending.training.repository;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Department;
 import com.ascending.training.model.Employee;
-import com.ascending.training.util.HibernateUtil;
+import com.ascending.training.util.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,7 +23,13 @@ import java.util.List;
 
 @Repository
 public class DepartmentDaoImpl implements DepartmentDao {
-    @Autowired private Logger logger;
+    //@Autowired
+    private Logger logger;
+
+    @Autowired
+    public DepartmentDaoImpl(Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public boolean save(Department department) {
@@ -120,8 +126,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public Department getDepartmentByName(String deptName) {
         if (deptName == null) return null;
-        String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
-                     "fetch em.accounts where lower(dept.name) = :name";
+        //String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
+        //             "fetch em.accounts where lower(dept.name) = :name";
+        String hql = "FROM Department as dept left join fetch dept.employees where lower(dept.name) = :name";
         //String hql = "FROM Department as dept where lower(dept.name) = :name";
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
