@@ -22,9 +22,19 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = {"/accounts"})
 public class AccountController {
-    @Autowired private Logger logger;
-    @Autowired private AccountService accountService;
-    @Autowired private EmployeeService employeeService;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private AccountService accountService;
+    //@Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    public AccountController(Logger logger, AccountService accountService, EmployeeService employeeService) {
+        this.logger = logger;
+        this.accountService = accountService;
+        this.employeeService = employeeService;
+    }
 
     //@GetMapping(value = "", produces = "application/json")
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})

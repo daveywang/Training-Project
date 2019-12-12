@@ -21,12 +21,30 @@ import java.util.List;
 /* SCOPE_SINGLETON is default scope, it can be omitted */
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DepartmentService {
-    @Autowired
+    /* Filed injection */
+    //@Autowired
     private Logger logger;
-
-    @Autowired
+    //@Autowired
     //@Qualifier("departmentDaoImpl2")
     private DepartmentDao departmentDao;
+
+    /* Constructor injection*/
+    @Autowired
+    public DepartmentService(Logger logger, DepartmentDao departmentDao) {
+        this.logger = logger;
+        this.departmentDao = departmentDao;
+    }
+
+    /* Setter injection */
+//    @Autowired
+//    public void setLogger(Logger logger) {
+//        this.logger = logger;
+//    }
+//
+//    @Autowired
+//    public  void setDepartmentDao(DepartmentDao departmentDao) {
+//        this.departmentDao = departmentDao;
+//    }
 
     public boolean save(Department department) {
         return departmentDao.save(department);

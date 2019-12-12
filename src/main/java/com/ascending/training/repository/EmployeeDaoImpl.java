@@ -22,9 +22,19 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao {
-    @Autowired private Logger logger;
-    @Autowired private SessionFactory sessionFactory;
-    @Autowired private DepartmentDao departmentDao;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private SessionFactory sessionFactory;
+    //@Autowired
+    private DepartmentDao departmentDao;
+
+    @Autowired
+    public EmployeeDaoImpl(Logger logger, SessionFactory sessionFactory, DepartmentDao departmentDao) {
+        this.logger = logger;
+        this.sessionFactory = sessionFactory;
+        this.departmentDao = departmentDao;
+    }
 
     @Override
     public boolean save(Employee employee, String deptName) {

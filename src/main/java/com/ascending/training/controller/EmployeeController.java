@@ -19,8 +19,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = {"/ems", "/employees"})
 public class EmployeeController {
-    @Autowired private Logger logger;
-    @Autowired private EmployeeService employeeService;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(Logger logger, EmployeeService employeeService) {
+        this.logger = logger;
+        this.employeeService = employeeService;
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Employee> getEmployees() {

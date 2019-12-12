@@ -26,8 +26,16 @@ import java.util.stream.Collectors;
 @Repository
 @Primary
 public class DepartmentDaoImpl implements DepartmentDao {
-    @Autowired private Logger logger;
-    @Autowired private SessionFactory sessionFactory;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public DepartmentDaoImpl(Logger logger, SessionFactory sessionFactory) {
+        this.logger = logger;
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public boolean save(Department department) {

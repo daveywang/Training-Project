@@ -36,7 +36,7 @@ public class AccountDaoTest {
     @Test
     public void getAccounts() {
         List<Account> accounts = accountDao.getAccounts();
-        int expectedNumOfDept = 5;
+        int expectedNumOfDept = 6;
         accounts.forEach(acct -> logger.debug(acct.toString()));
         Assert.assertEquals(expectedNumOfDept, accounts.size());
     }

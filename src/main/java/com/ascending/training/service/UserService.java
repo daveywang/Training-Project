@@ -18,7 +18,13 @@ import org.springframework.stereotype.Service;
 /* SCOPE_SINGLETON is default scope, it can be omitted */
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class UserService {
-    @Autowired private UserDao userDao;
+    //@Autowired
+    private UserDao userDao;
+
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public boolean save(User user) {
         return userDao.save(user);

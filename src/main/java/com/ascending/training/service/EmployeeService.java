@@ -20,7 +20,13 @@ import java.util.List;
 /* SCOPE_SINGLETON is default scope, it can be omitted */
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class EmployeeService {
-    @Autowired private EmployeeDao employeeDao;
+    //@Autowired
+    private EmployeeDao employeeDao;
+
+    @Autowired
+    public EmployeeService(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
 
     public boolean save(Employee employee, String deptName) {
         return employeeDao.save(employee, deptName);

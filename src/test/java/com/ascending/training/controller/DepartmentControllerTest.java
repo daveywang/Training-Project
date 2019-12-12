@@ -39,7 +39,7 @@ public class DepartmentControllerTest {
                                            .content("{" +
                                                     " \"name\": \"dwang\"," +
                                                     " \"password\": \"123456789\"," +
-                                                    " \"email\": \"dwang@ascending.com\"" +
+                                                    " \"email\": \"dwang@training.ascendingdc.com\"" +
                                                     "}")
                                            .contentType(MediaType.APPLICATION_JSON))
                                            .andDo(MockMvcResultHandlers.print()).andReturn();

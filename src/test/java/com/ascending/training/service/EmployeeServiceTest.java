@@ -57,7 +57,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void save() {
-        Employee employee = new Employee("wzheng", "Wenjia", "Zheng", "wenjia.zheng@ascending.com", "405 North Washington St. Falls Church, VA");
+        Employee employee = new Employee("wzheng", "Wenjia", "Zheng", "wenjia.zheng@ascending.com - EMAIL", "405 North Washington St. Falls Church, VA");
         Employee employee2 = employeeService.getEmployeeByName(employee.getName());
 
         /*

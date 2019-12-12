@@ -10,7 +10,7 @@ package com.ascending.training.controller;
 import com.ascending.training.service.FileService;
 import com.ascending.training.service.MessageService;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -28,14 +28,23 @@ import java.nio.file.Paths;
 @RestController
 @RequestMapping(value = {"/files"})
 public class FileController {
-    private static final String queueName = "training_queue_ascending_com";
-    private static final String fileDownloadDir = "/Users/liweiwang/ascending/lecture";
-    @Autowired
+    /* Inject value from vm options */
+    @Value("${aws.queue.name}")
+    private static String queueName;
+    @Value("${file.download.dir}")
+    private static String fileDownloadDir;
+    //@Autowired
     private Logger logger;
-    @Autowired
+    //@Autowired
     private FileService fileService;
-    @Autowired
+    //@Autowired
     private MessageService messageService;
+
+    public FileController(Logger logger, FileService fileService, MessageService messageService) {
+        this.logger = logger;
+        this.fileService = fileService;
+        this.messageService = messageService;
+    }
 
     @RequestMapping(value = "/{bucketName}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity uploadFile(@PathVariable String bucketName, @RequestParam("file") MultipartFile file) {

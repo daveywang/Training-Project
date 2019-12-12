@@ -43,6 +43,7 @@ public class MessageServiceMockAWSTest {
     @Mock(answer = Answers.RETURNS_DEEP_STUBS) private AmazonSQS amazonSQS;
     @InjectMocks
     private MessageService messageService;
+
     private String queueName = "training_queue_ascending_com";
     private String fakeQueueUrl = "www.fakeQueueUrl.com/abc/123/fake";
     private String msg = "This is a message for test";

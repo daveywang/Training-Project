@@ -17,7 +17,13 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = {"/test"})
 public class TestController {
-    @Autowired private Logger logger;
+    //@Autowired
+    private Logger logger;
+
+    @Autowired
+    public TestController(Logger logger) {
+        this.logger = logger;
+    }
 
     @RequestMapping(value = "/path/{pathValue1}/{pathValue2}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public String getPath(@PathVariable(name = "pathValue1") String p1, @PathVariable(name = "pathValue2") String p2) {

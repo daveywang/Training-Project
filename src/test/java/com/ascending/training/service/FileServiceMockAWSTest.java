@@ -8,7 +8,6 @@
 package com.ascending.training.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.util.IOUtils;
 import com.ascending.training.init.AppInitializer;
 import org.junit.After;
 import org.junit.Assert;
@@ -23,10 +22,9 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -49,16 +47,16 @@ public class FileServiceMockAWSTest {
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS) private AmazonS3 amazonS3;
     @Autowired
-    @Mock
+    @Spy
     private Logger logger;  //autowired the logger and inject it into the object fileService
     @InjectMocks
     private FileService fileService;  //fileService is not mocked object
-
     private String bucketName = "training_queue_ascending_com";
     private String fileName = "test.txt";
     private URL fakeFileUrl;
+    @Mock
     private MultipartFile multipartFile;
-    private String path;
+    //private String path;
 
     @Before
     public void setUp() throws MalformedURLException, FileNotFoundException, IOException {
@@ -68,12 +66,19 @@ public class FileServiceMockAWSTest {
         MockitoAnnotations.initMocks(this);
 
         fakeFileUrl = new URL("http://www.fakeQueueUrl.com/abc/123/fake");
-        File file = new File("/Users/liweiwang/ascending/lecture/README.md");
-        FileInputStream input = new FileInputStream(file);
-        multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", IOUtils.toByteArray(input));
-        path = System.getProperty("user.dir") + File.separator + "temp";
+        //File file = new File("/Users/liweiwang/ascending/lecture/README.md");
+        //FileInputStream input = new FileInputStream(file);
+        //multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", IOUtils.toByteArray(input));
+        //path = System.getProperty("user.dir") + File.separator + "temp";
 
-        //Stubbing for the method doesObjectExist and generatePresignedUrl
+        //Stubbing for the methods in the object multipartFile
+        when(multipartFile.getOriginalFilename()).thenReturn("anyFileName");
+        when(multipartFile.getContentType()).thenReturn("Application");
+        when(multipartFile.getSize()).thenReturn(9999L);
+        when(multipartFile.getInputStream()).thenReturn(mock(InputStream.class));
+
+
+        //Stubbing for the methods doesObjectExist and generatePresignedUrl in the object amazonS3
         when(amazonS3.doesObjectExist(anyString(), anyString())).thenReturn(false);
         when(amazonS3.generatePresignedUrl(any())).thenReturn(fakeFileUrl);
     }

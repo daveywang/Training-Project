@@ -19,8 +19,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = {"/departments", "/depts"})
 public class DepartmentController {
-    @Autowired private Logger logger;
-    @Autowired private DepartmentService departmentService;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    public DepartmentController(Logger logger, DepartmentService departmentService) {
+        this.logger = logger;
+        this.departmentService = departmentService;
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {MediaType.APPLICATION_XML_VALUE})
     public List<Department> getDepartments() {

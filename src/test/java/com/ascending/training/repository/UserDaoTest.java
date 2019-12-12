@@ -22,17 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoTest {
-    @Autowired
-    private Logger logger;
-    private UserDao userDao;
-    private RoleDao roleDao;
+    @Autowired private Logger logger;
+    @Autowired private UserDao userDao;
+    @Autowired private RoleDao roleDao;
     private String email;
     private List<Role> roles = new ArrayList();
 
     @Before
     public void init() {
-        userDao = new UserDaoImpl();
-        roleDao = new RoleDaoImpl();
+        //userDao = new UserDaoImpl();
+        //roleDao = new RoleDaoImpl();
         email = "dwang@ascending.com";
         roles.add(roleDao.getRoleByName("Manager"));
         roles.add(roleDao.getRoleByName("User"));

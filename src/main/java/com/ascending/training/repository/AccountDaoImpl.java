@@ -24,9 +24,19 @@ import java.util.stream.Collectors;
 
 @Repository
 public class AccountDaoImpl implements AccountDao {
-    @Autowired private Logger logger;
-    @Autowired private SessionFactory sessionFactory;
-    @Autowired private EmployeeDao employeeDao;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private SessionFactory sessionFactory;
+    //@Autowired
+    private EmployeeDao employeeDao;
+
+    @Autowired
+    public AccountDaoImpl(Logger logger, SessionFactory sessionFactory, EmployeeDao employeeDao) {
+        this.logger = logger;
+        this.sessionFactory = sessionFactory;
+        this.employeeDao = employeeDao;
+    }
 
     @Override
     public boolean save(Account account, String employeeName) {

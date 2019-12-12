@@ -18,7 +18,13 @@ import org.springframework.stereotype.Service;
 /* SCOPE_SINGLETON is default scope, it can be omitted */
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class RoleService {
-    @Autowired private RoleDao roleDao;
+    //@Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    public RoleService(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
 
     public Role getRoleByName(String name) {
         return roleDao.getRoleByName(name);

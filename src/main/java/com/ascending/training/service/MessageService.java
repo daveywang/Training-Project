@@ -23,10 +23,17 @@ import java.util.Map;
 /* SCOPE_SINGLETON is default scope, it can be omitted */
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class MessageService {
-    @Autowired
+    //@Autowired
     private Logger logger;
-    @Autowired
+    //@Autowired
     private AmazonSQS amazonSQS;
+
+    /* Constructor injection*/
+    @Autowired
+    public MessageService(Logger logger, AmazonSQS amazonSQS) {
+        this.logger = logger;
+        this.amazonSQS = amazonSQS;
+    }
 
     public String createQueue(String queueName) {
         String queueUrl = null;

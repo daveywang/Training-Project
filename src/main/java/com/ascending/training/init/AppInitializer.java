@@ -32,6 +32,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
     -Dlogging.level.com.ascending=TRACE
     -Dserver.port=8080
     -Dsecret.key=Training123!@#
+    -Daws.queue.name=training_queue_ascending_com
+    -Dfile.download.dir = /Users/liweiwang/ascending/lecture
 */
 
 /*  Run Spring boot application by mvn command line
@@ -46,6 +48,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
     -Dlogging.level.com.ascending=TRACE \
     -Dserver.port=8080 \
     -Dsecret.key=Training123!
+    -Daws.queue.name=training_queue_ascending_com
+    -Dfile.download.dir = /Users/liweiwang/ascending/lecture
  */
 
 /*

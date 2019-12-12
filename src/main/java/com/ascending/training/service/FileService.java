@@ -30,10 +30,17 @@ import java.time.ZoneOffset;
 /* SCOPE_SINGLETON is default scope, it can be omitted */
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class FileService {
-    @Autowired
+    //@Autowired
     private Logger logger;
-    @Autowired
+    //@Autowired
     private AmazonS3 amazonS3;
+
+    /* Constructor injection*/
+    @Autowired
+    public FileService(Logger logger, AmazonS3 amazonS3) {
+        this.logger = logger;
+        this.amazonS3 = amazonS3;
+    }
 
     /*
      * MultipartFile is a representation of an uploaded file received in a multipart request.

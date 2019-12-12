@@ -38,7 +38,7 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartments() {
         List<Department> departments = departmentService.getDepartments();
-        int expectedNumOfDept = 3;
+        int expectedNumOfDept = 4;
 
         departments.forEach(dept -> logger.info(dept.toString()));
         Assert.assertEquals(expectedNumOfDept, departments.size());

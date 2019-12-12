@@ -18,8 +18,16 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    @Autowired private Logger logger;
-    @Autowired private SessionFactory sessionFactory;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public UserDaoImpl(Logger logger, SessionFactory sessionFactory) {
+        this.logger = logger;
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public boolean save(User user) {

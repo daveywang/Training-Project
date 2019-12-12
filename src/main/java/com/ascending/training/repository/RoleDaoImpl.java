@@ -16,8 +16,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
-    @Autowired
+    //@Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public RoleDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Role getRoleByName(String name) {

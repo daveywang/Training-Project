@@ -26,8 +26,17 @@ import java.util.Map;
 //@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @RequestMapping(value = {"/auth"})
 public class Authentication {
-    @Autowired private Logger logger;
-    @Autowired private UserService userService;
+    //@Autowired
+    private Logger logger;
+    //@Autowired
+    private UserService userService;
+
+    @Autowired
+    public Authentication(Logger logger, UserService userService) {
+        this.logger =logger;
+        this.userService = userService;
+    }
+
     private String errorMsg = "The email or password is not correct.";
     private String tokenKeyWord = "Authorization";
     private String tokenType = "Bearer";

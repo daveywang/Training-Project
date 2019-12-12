@@ -10,7 +10,6 @@ package com.ascending.training.filter;
 import com.ascending.training.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.*;
@@ -21,8 +20,13 @@ import java.io.IOException;
 
 @WebFilter(filterName = "securityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFilter implements Filter {
-    @Autowired private Logger logger;
+    //@Autowired
+    private Logger logger;
     private static String AUTH_URI = "/auth";
+
+    public SecurityFilter(Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public void init(FilterConfig filterConfig) {
