@@ -7,8 +7,6 @@
 
 package com.ascending.training.controller;
 
-import com.ascending.training.exception.AuthenticationException;
-import com.ascending.training.exception.UserNotFoundException;
 import com.ascending.training.model.User;
 import com.ascending.training.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -30,18 +28,7 @@ public class Authentication {
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity authenticate(@RequestBody User user) {
-        Map<String, String> token = null;
-
-        try {
-            token = authService.authenticate(user);
-        }
-        catch (UserNotFoundException userNotFoundexception) {
-            throw userNotFoundexception;
-        }
-        catch (Exception e) {
-            throw new AuthenticationException(e.getMessage(), user);
-        }
-
+        Map<String, String> token = authService.authenticate(user);
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
