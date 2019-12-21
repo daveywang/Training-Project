@@ -7,6 +7,7 @@
 
 package com.ascending.training.service;
 
+import com.ascending.training.exception.AuthenticationException;
 import com.ascending.training.exception.UserNotFoundException;
 import com.ascending.training.model.User;
 import com.ascending.training.util.JwtUtil;
@@ -37,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
         int statusCode = HttpServletResponse.SC_UNAUTHORIZED;
         String uri = req.getRequestURI();
         String verb = req.getMethod();
+        String msg = "No valid token found.";
         if (uri.startsWith(AUTH_URI)) return HttpServletResponse.SC_ACCEPTED;
 
         try {
@@ -59,14 +61,13 @@ public class AuthServiceImpl implements AuthService {
                 }
             }
 
-            logger.debug(String.format("Verb: %s, allowed resources: %s", verb, allowedResources));
+            msg = String.format("Verb: %s, allowed resources: %s", verb, allowedResources);
         }
         catch (Exception e) {
-            String msg = e.getMessage();
-            if (msg == null) msg = "No valid token found.";
-            logger.error(msg);
+            if (e.getMessage() != null) msg = e.getMessage();
         }
 
+        logger.debug(msg);
         return statusCode;
     }
 
@@ -77,10 +78,16 @@ public class AuthServiceImpl implements AuthService {
         logger.debug(user.toString());
         User u = userService.getUserByCredentials(user.getEmail(), user.getPassword());
         if (u == null) throw new UserNotFoundException(user);
-        String token = JwtUtil.generateToken(u);
-        Map<String, String> map = new HashMap();
-        map.put(tokenKeyWord, tokenType + " " + token);
-        return map;
+
+        try {
+            String token = JwtUtil.generateToken(u);
+            Map<String, String> map = new HashMap();
+            map.put(tokenKeyWord, tokenType + " " + token);
+            return map;
+        }
+        catch (Exception e) {
+            throw new AuthenticationException(e.getMessage(), user);
+        }
     }
 
 }

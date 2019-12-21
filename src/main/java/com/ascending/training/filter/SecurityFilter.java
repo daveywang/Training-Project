@@ -20,7 +20,7 @@ import java.io.IOException;
 @WebFilter(filterName = "securityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFilter implements Filter {
     @Autowired
-    private AuthService authorizationService;
+    private AuthService authService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -35,9 +35,9 @@ public class SecurityFilter implements Filter {
             return;
         }
 
-        int statusCode = authorizationService.authorize(req);
+        int statusCode = authService.authorize(req);
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(request, response);
-        else ((HttpServletResponse)response).sendError(statusCode);
+        else ((HttpServletResponse)response).sendError(statusCode, "No valid token found.");
     }
 
     @Override

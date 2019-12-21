@@ -10,35 +10,28 @@ package com.ascending.training.exception;
 import com.ascending.training.model.User;
 import org.springframework.http.HttpStatus;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AuthenticationException extends RuntimeException {
-    private String message = "Bad request.";
-    private int statusCode = HttpStatus.BAD_REQUEST.value();
+public class AuthenticationException extends AppBaseException {
     private User user;
 
+    public AuthenticationException() {
+        super(HttpStatus.BAD_REQUEST.value(), "Bad request.");
+    }
+
     public AuthenticationException(String message) {
+        this();
         if (message != null) this.message = message;
     }
 
     public AuthenticationException(String message, User user) {
-        if (message != null) this.message = message;
+        this(message);
         this.user = user;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
+    @Override
     public Map<String, Object> getFormattedMessage() {
-        Map<String, Object> map = new LinkedHashMap();
-        map.put("status code", statusCode);
-        map.put("message", message);
+        Map<String, Object> map = super.getFormattedMessage();
         if (user != null) map.put("user", user);
         return map;
     }
