@@ -9,7 +9,7 @@ package com.ascending.training.repository;
 
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Department;
-import com.ascending.training.service.DepartmentService;
+import com.ascending.training.service.DepartmentServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import java.util.List;
 @SpringBootTest(classes= AppInitializer.class)
 public class DepartmentDaoTest {
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentServiceImpl departmentService;
     @Autowired
     private Logger logger;
 

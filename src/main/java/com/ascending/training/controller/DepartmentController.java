@@ -9,6 +9,7 @@ package com.ascending.training.controller;
 
 import com.ascending.training.model.Department;
 import com.ascending.training.service.DepartmentService;
+import com.ascending.training.service.DepartmentServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,13 +20,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = {"/departments", "/depts"})
 public class DepartmentController {
-    //@Autowired
     private Logger logger;
-    //@Autowired
     private DepartmentService departmentService;
 
     @Autowired
-    public DepartmentController(Logger logger, DepartmentService departmentService) {
+    public DepartmentController(Logger logger, DepartmentServiceImpl departmentService) {
         this.logger = logger;
         this.departmentService = departmentService;
     }

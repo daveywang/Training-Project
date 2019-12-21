@@ -7,8 +7,6 @@
 
 package com.ascending.training.model;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -17,13 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
-    //@SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = SEQUENCE, generator = "user_id_generator")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-
+public class User extends Model {
     @Column(name = "name")
     private String name;
 
@@ -50,18 +42,9 @@ public class User {
     )
     private List<Role> roles;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -69,7 +52,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = DigestUtils.md5Hex(password.trim());
     }
@@ -77,7 +59,6 @@ public class User {
     public String getSecretKey() {
         return secretKey;
     }
-
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
     }
@@ -85,7 +66,6 @@ public class User {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -93,7 +73,6 @@ public class User {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -101,7 +80,6 @@ public class User {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -109,7 +87,6 @@ public class User {
     public List<Role> getRoles() {
         return roles;
     }
-
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
@@ -129,20 +106,5 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, password, secretKey, firstName, lastName, email);
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String str = null;
-
-        try {
-            str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
-            jpe.printStackTrace();
-        }
-
-        return str;
     }
 }

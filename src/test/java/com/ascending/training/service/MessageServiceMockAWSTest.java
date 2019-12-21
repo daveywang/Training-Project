@@ -40,9 +40,10 @@ public class MessageServiceMockAWSTest {
     @Autowired
     @Spy
     private Logger logger;
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS) private AmazonSQS amazonSQS;
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private AmazonSQS amazonSQS;
     @InjectMocks
-    private MessageService messageService;
+    private MessageServiceImpl messageService;
 
     private String queueName = "training_queue_ascending_com";
     private String fakeQueueUrl = "www.fakeQueueUrl.com/abc/123/fake";

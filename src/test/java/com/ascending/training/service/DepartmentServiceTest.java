@@ -9,8 +9,11 @@ package com.ascending.training.service;
 
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Department;
+import com.ascending.training.model.Employee;
+import com.ascending.training.repository.DepartmentDao;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -23,16 +26,21 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= AppInitializer.class)
 public class DepartmentServiceTest {
-    @Autowired private Logger logger;
-    @Autowired private DepartmentService departmentService;
+    @Autowired
+    private Logger logger;
+    @Autowired
+    private DepartmentDao departmentDao;
+    //@Autowired
+    private DepartmentService departmentService;
 
     @Before
     public void init() {
-        //You can not use new to creat the departmentService object directly,
-        //as the DI is used to inject logger in DepartmentService, otherwise,
-        //logger can not be injected, then it will through NullPointException
-        //so, you have to use @Autowired inject the object departmentService
-        //departmentService = new DepartmentService();
+        /*
+            Demonstrate Constructor Injection is best way for DI, it ensure state safety of the object,
+            in case there is no DI used in high-level modules,
+            for example, here create the object DepartmentService by using new
+        */
+        departmentService = new DepartmentServiceImpl(logger, departmentDao);
     }
 
     @Test
@@ -84,5 +92,18 @@ public class DepartmentServiceTest {
     @Test
     public void deleteDepartment() {
         //departmentService.delete("HR");
+    }
+
+    @Ignore
+    @Test
+    public void saveDepartment() {
+        Department department = new Department();
+        department.setName("AAAA");
+        department.setDescription("AAAAAAAAA");
+        Employee employee = new Employee();
+        employee.setName("ZZZZZ");
+        department.addEmployee(employee);
+        boolean isSaved = departmentService.save(department);
+        Assert.assertTrue(isSaved);
     }
 }

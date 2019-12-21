@@ -8,16 +8,15 @@
 package com.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee extends Model {
     public Employee() { }
     public Employee(String name, String firstName, String lastName, String email, String address) {
         this.name = name;
@@ -26,12 +25,6 @@ public class Employee {
         this.email = email;
         this.address = address;
     }
-
-    @Id
-    //@SequenceGenerator(name = "employee_id_generator", sequenceName = "employee_id_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = SEQUENCE, generator = "employee_id_generator")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
 
     @Column(name = "name")
     private String name;
@@ -53,21 +46,12 @@ public class Employee {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Set<Account> accounts;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Account> accounts = new HashSet();
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -75,7 +59,6 @@ public class Employee {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -83,7 +66,6 @@ public class Employee {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -91,7 +73,6 @@ public class Employee {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -99,7 +80,6 @@ public class Employee {
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -107,12 +87,12 @@ public class Employee {
     public Department getDepartment() {
         return department;
     }
-
     public void setDepartment(Department department) {
         this.department = department;
     }
 
     public Set<Account> getAccounts() {
+        /* This solve the session closed exception when the fetch type is lazy */
         try {
             int size = accounts.size();
         }
@@ -124,7 +104,17 @@ public class Employee {
     }
 
     public void setAccounts(Set<Account> accounts) {
+        /* Create link between parent and children objects automatically */
+        for (Account a : accounts) {
+            if (a.getEmployee() == null) a.setEmployee(this);
+        }
+
         this.accounts = accounts;
+    }
+
+    public void addAccount(Account account) {
+        account.setEmployee(this);
+        accounts.add(account);
     }
 
     @Override
@@ -143,19 +133,5 @@ public class Employee {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, firstName, lastName, email, address);
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String str = null;
-        try {
-            str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
-            jpe.printStackTrace();
-        }
-
-        return str;
     }
 }

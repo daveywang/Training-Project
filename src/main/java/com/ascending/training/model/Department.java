@@ -8,29 +8,21 @@
 package com.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "department")
-public class Department {
+public class Department extends Model {
     public Department() {}
     public Department(String name, String description, String location) {
         this.name = name;
         this.description = description;
         this.location = location;
     }
-
-    @Id
-    //@SequenceGenerator(name = "department_id_generator", sequenceName = "department_id_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_id_generator")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
 
     @Column(name = "name")
     private String name;
@@ -42,21 +34,12 @@ public class Department {
     private String location;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @OneToMany(mappedBy = "department", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Set<Employee> employees;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Employee> employees = new HashSet();
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -64,7 +47,6 @@ public class Department {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -72,12 +54,12 @@ public class Department {
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
 
     public Set<Employee> getEmployees() {
+        /* This solve the session closed exception when the fetch type is lazy */
         try {
             int size = employees.size();
         }
@@ -89,7 +71,17 @@ public class Department {
     }
 
     public void setEmployees(Set<Employee> employees) {
+        /* Create link between parent and children objects automatically */
+        for (Employee e : employees) {
+            if (e.getDepartment() == null) e.setDepartment(this);
+        }
+
         this.employees = employees;
+    }
+
+    public void addEmployee(Employee employee) {
+        employee.setDepartment(this);
+        employees.add(employee);
     }
 
     @Override
@@ -106,19 +98,5 @@ public class Department {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, location);
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String str = null;
-        try {
-            str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
-            jpe.printStackTrace();
-        }
-
-        return str;
     }
 }

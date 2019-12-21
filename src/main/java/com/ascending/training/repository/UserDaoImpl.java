@@ -31,6 +31,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean save(User user) {
+        String msg = String.format("The user %s was inserted into the table.", user.toString());
         Transaction transaction = null;
         boolean isSuccess = true;
 
@@ -42,11 +43,10 @@ public class UserDaoImpl implements UserDao {
         catch (Exception e) {
             isSuccess = false;
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
+            msg = e.getMessage();
         }
 
-        if (isSuccess) logger.debug(String.format("The user %s was inserted into the table.", user.toString()));
-
+        logger.debug(msg);
         return isSuccess;
     }
 

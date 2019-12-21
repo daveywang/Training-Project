@@ -40,6 +40,7 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public boolean save(Account account, String employeeName) {
+        String msg = String.format("The account %s was inserted into the table.", account.toString());
         Transaction transaction = null;
         boolean isSuccess = false;
 
@@ -54,16 +55,15 @@ public class AccountDaoImpl implements AccountDao {
                 isSuccess = true;
             }
             else {
-                logger.debug(String.format("The employee [%s] doesn't exist.", employeeName));
+                msg = String.format("The employee [%s] doesn't exist.", employeeName);
             }
         }
         catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
+            msg = e.getMessage();
         }
 
-        if (isSuccess) logger.debug(String.format("The account %s was inserted into the table.", account.toString()));
-
+        logger.debug(msg);
         return isSuccess;
     }
 
@@ -78,6 +78,7 @@ public class AccountDaoImpl implements AccountDao {
         }
     }
 
+    @Override
     public Account getAccountById(int id) {
         String hql = "FROM Account as act join fetch act.employee where act.id = :id";
 
@@ -89,6 +90,7 @@ public class AccountDaoImpl implements AccountDao {
         }
     }
 
+    @Override
     public void transferMoney(int accountFrom, int accountTo, double totalMoney) {
         try (Session session = sessionFactory.openSession()) {
             StoredProcedureQuery query = session.createStoredProcedureQuery("transfer");

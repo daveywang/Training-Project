@@ -8,22 +8,17 @@
 package com.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "role")
-public class Role {
-    @Id
-    //@SequenceGenerator(name = "role_id_generator", sequenceName = "role_id_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = SEQUENCE, generator = "role_id_generator")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-
+public class Role extends Model {
     @Column(name = "name")
     private String name;
 
@@ -53,18 +48,9 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -72,7 +58,6 @@ public class Role {
     public String getAllowedResource() {
         return allowedResource;
     }
-
     public void setAllowedResource(String allowedResource) {
         this.allowedResource = allowedResource;
     }
@@ -80,7 +65,6 @@ public class Role {
     public boolean isAllowedRead() {
         return allowedRead;
     }
-
     public void setAllowedRead(boolean allowedRead) {
         this.allowedRead = allowedRead;
     }
@@ -88,7 +72,6 @@ public class Role {
     public boolean isAllowedCreate() {
         return allowedCreate;
     }
-
     public void setAllowedCreate(boolean allowedCreate) {
         this.allowedCreate = allowedCreate;
     }
@@ -96,7 +79,6 @@ public class Role {
     public boolean isAllowedUpdate() {
         return allowedUpdate;
     }
-
     public void setAllowedUpdate(boolean allowedUpdate) {
         this.allowedUpdate = allowedUpdate;
     }
@@ -104,7 +86,6 @@ public class Role {
     public boolean isAllowedDelete() {
         return allowedDelete;
     }
-
     public void setAllowedDelete(boolean allowedDelete) {
         this.allowedDelete = allowedDelete;
     }
@@ -112,7 +93,6 @@ public class Role {
     public List<User> getUsers() {
         return users;
     }
-
     public void setUsers(List<User> users) {
         this.users = users;
     }
@@ -134,19 +114,5 @@ public class Role {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, allowedResource, allowedRead, allowedCreate, allowedUpdate, allowedDelete);
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String str = null;
-        try {
-            str = objectMapper.writeValueAsString(this);
-        }
-        catch(JsonProcessingException jpe) {
-            jpe.printStackTrace();
-        }
-
-        return str;
     }
 }

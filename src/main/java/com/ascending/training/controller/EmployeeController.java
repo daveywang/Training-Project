@@ -9,6 +9,7 @@ package com.ascending.training.controller;
 
 import com.ascending.training.model.Employee;
 import com.ascending.training.service.EmployeeService;
+import com.ascending.training.service.EmployeeServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,13 +20,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = {"/ems", "/employees"})
 public class EmployeeController {
-    //@Autowired
     private Logger logger;
-    //@Autowired
     private EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(Logger logger, EmployeeService employeeService) {
+    public EmployeeController(Logger logger, EmployeeServiceImpl employeeService) {
         this.logger = logger;
         this.employeeService = employeeService;
     }

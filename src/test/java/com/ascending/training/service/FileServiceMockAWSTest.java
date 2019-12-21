@@ -50,7 +50,7 @@ public class FileServiceMockAWSTest {
     @Spy
     private Logger logger;  //autowired the logger and inject it into the object fileService
     @InjectMocks
-    private FileService fileService;  //fileService is not mocked object
+    private FileServiceImpl fileService;  //fileService is not mocked object
     private String bucketName = "training_queue_ascending_com";
     private String fileName = "test.txt";
     private URL fakeFileUrl;
@@ -110,7 +110,7 @@ public class FileServiceMockAWSTest {
 
         //Annotation @Mock can only be used for calls variables
         //create mocked object fshttps://tomcat.apache.org/download-80.cgi
-        FileService fs = Mockito.mock(FileService.class);
+        FileServiceImpl fs = Mockito.mock(FileServiceImpl.class);
 
         //Stubbing
         //when(fs.saveFile(any(), anyString())).thenReturn(true);

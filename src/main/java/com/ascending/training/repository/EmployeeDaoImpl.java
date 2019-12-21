@@ -7,8 +7,8 @@
 
 package com.ascending.training.repository;
 
-import com.ascending.training.model.Department;
 import com.ascending.training.model.Employee;
+import com.ascending.training.model.Department;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -38,6 +38,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public boolean save(Employee employee, String deptName) {
+        String msg = String.format("The employee %s was inserted into the table.", employee.toString());
         Transaction transaction = null;
         boolean isSuccess = false;
 
@@ -52,20 +53,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 isSuccess = true;
             }
             else {
-                logger.debug(String.format("The department [%s] doesn't exist.", deptName));
+                msg = String.format("The department [%s] doesn't exist.", deptName);
             }
         }
         catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
+            msg = e.getMessage();
         }
 
-        if (isSuccess) logger.debug(String.format("The employee %s was inserted into the table.", employee.toString()));
+        logger.debug(msg);
         return isSuccess;
     }
 
     @Override
     public int updateEmployeeAddress(String name, String address) {
+        String msg;
         String hql = "UPDATE Employee as em set em.address = :address where em.name = :name";
         int updatedCount = 0;
         Transaction transaction = null;
@@ -78,14 +80,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
             transaction = session.beginTransaction();
             updatedCount = query.executeUpdate();
             transaction.commit();
+            msg = String.format("The employee %s was updated, total updated record(s): %d", name, updatedCount);
         }
         catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
+            msg = e.getMessage();
         }
 
-        logger.debug(String.format("The employee %s was updated, total updated record(s): %d", name, updatedCount));
-
+        logger.debug(msg);
         return updatedCount;
     }
 

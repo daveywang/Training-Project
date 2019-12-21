@@ -9,8 +9,10 @@ package com.ascending.training.service;
 
 import com.ascending.training.model.User;
 
-public interface UserService {
-    boolean save(User user);
-    User getUserByEmail(String email);
-    User getUserByCredentials(String email, String password);
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
+public interface AuthService {
+    int authorize(HttpServletRequest req);
+    Map<String, String> authenticate(User user);
 }

@@ -37,12 +37,11 @@ public class DepartmentDaoImpl2 implements DepartmentDao {
 
     @Override
     public boolean save(Department department) {
+        String msg = String.format("The department %s was inserted into the table.", department.toString());
         Transaction transaction = null;
         boolean isSuccess = true;
-        Session session = null;
 
-        try {
-            session = sessionFactory.withOptions().interceptor(new HibernateInterceptor()).openSession();
+        try (Session session = sessionFactory.withOptions().interceptor(new HibernateInterceptor()).openSession()) {
             transaction = session.beginTransaction();
             session.save(department);
             transaction.commit();
@@ -50,41 +49,37 @@ public class DepartmentDaoImpl2 implements DepartmentDao {
         catch (Exception e) {
             isSuccess = false;
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
-        }
-        finally {
-            if (session != null) session.close();
+            msg = e.getMessage();
         }
 
-        if (isSuccess) logger.debug(String.format("The department %s was inserted into the table.", department.toString()));
-
+        logger.debug(msg);
         return isSuccess;
     }
 
     @Override
     public boolean update(Department department) {
+        String msg = String.format("The department %s was updated.", department.toString());
         Transaction transaction = null;
         boolean isSuccess = true;
 
-        try {
-            Session session = sessionFactory.getCurrentSession();
+        try (Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(department);
             transaction.commit();
         }
         catch (Exception e) {
             isSuccess = false;
+            msg = e.getMessage();
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The department %s was updated.", department.toString()));
-
+        logger.debug(msg);
         return isSuccess;
     }
 
     @Override
     public boolean delete(String deptName) {
+        String msg = String.format("The department %s was deleted", deptName);
         String hql = "DELETE Department where name = :deptName1";
         int deletedCount = 0;
         Transaction transaction = null;
@@ -102,11 +97,10 @@ public class DepartmentDaoImpl2 implements DepartmentDao {
         }
         catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
+            msg = e.getMessage();
         }
 
-        logger.debug(String.format("The department %s was deleted", deptName));
-
+        logger.debug(msg);
         return deletedCount >= 1 ? true : false;
     }
 
@@ -138,7 +132,7 @@ public class DepartmentDaoImpl2 implements DepartmentDao {
     public Department getDepartmentByName(String deptName) {
         if (deptName == null) return null;
         String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
-                     "fetch em.accounts where lower(dept.name) = :name";
+                "fetch em.accounts where lower(dept.name) = :name";
         //String hql = "FROM Department as dept where lower(dept.name) = :name";
 
         Session session = sessionFactory.getCurrentSession();
@@ -177,9 +171,9 @@ public class DepartmentDaoImpl2 implements DepartmentDao {
         if (deptName == null) return null;
 
         String hql = "FROM Department as dept " +
-                     "left join dept.employees as ems " +
-                     "left join ems.accounts as acnts " +
-                     "where lower(dept.name) = :name";
+                "left join dept.employees as ems " +
+                "left join ems.accounts as acnts " +
+                "where lower(dept.name) = :name";
 
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(hql);

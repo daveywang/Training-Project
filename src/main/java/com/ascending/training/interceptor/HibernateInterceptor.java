@@ -47,6 +47,7 @@ public class HibernateInterceptor extends EmptyInterceptor {
         logger.info(String.format(">>>>>>>>>> [onLoad - %s] - propertyNames: %s", entity.getClass().getName(), Arrays.deepToString(propertyNames)));
         logger.info(String.format(">>>>>>>>>> [onLoad - %s] - types: %s", entity.getClass().getName(), Arrays.deepToString(types)));
 
+        /* Demonstrate the data cab changed before the data is persisted */
         if (entity instanceof Department) {
             state[0] = "Modified Data";
             return true;

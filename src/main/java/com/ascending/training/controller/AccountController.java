@@ -10,7 +10,9 @@ package com.ascending.training.controller;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Employee;
 import com.ascending.training.service.AccountService;
+import com.ascending.training.service.AccountServiceImpl;
 import com.ascending.training.service.EmployeeService;
+import com.ascending.training.service.EmployeeServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,15 +24,12 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = {"/accounts"})
 public class AccountController {
-    //@Autowired
     private Logger logger;
-    //@Autowired
     private AccountService accountService;
-    //@Autowired
     private EmployeeService employeeService;
 
     @Autowired
-    public AccountController(Logger logger, AccountService accountService, EmployeeService employeeService) {
+    public AccountController(Logger logger, AccountServiceImpl accountService, EmployeeServiceImpl employeeService) {
         this.logger = logger;
         this.accountService = accountService;
         this.employeeService = employeeService;
@@ -55,9 +54,7 @@ public class AccountController {
         logger.debug(String.format("Employee name: %s, account: %s", employeeName, account.toString()));
         String msg = "The account was created.";
         boolean isSuccess = accountService.save(account, employeeName);
-
         if (!isSuccess) msg = "The account was not created.";
-
         return msg;
     }
 }

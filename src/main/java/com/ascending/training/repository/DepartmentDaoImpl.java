@@ -27,9 +27,11 @@ import java.util.stream.Collectors;
 @Primary
 public class DepartmentDaoImpl implements DepartmentDao {
     //@Autowired
-    private Logger logger;
+    protected Logger logger;
     //@Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
+
+    public DepartmentDaoImpl() {};
 
     @Autowired
     public DepartmentDaoImpl(Logger logger, SessionFactory sessionFactory) {
@@ -39,12 +41,12 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     @Override
     public boolean save(Department department) {
+        String msg = String.format("The department %s was inserted into the table.", department.toString());
         Transaction transaction = null;
         boolean isSuccess = true;
-        Session session = null;
 
-        try {
-            session = sessionFactory.withOptions().interceptor(new HibernateInterceptor()).openSession();
+        /* Demonstrate Hibernate session scope interceptor */
+        try (Session session = sessionFactory.withOptions().interceptor(new HibernateInterceptor()).openSession()) {
             transaction = session.beginTransaction();
             session.save(department);
             transaction.commit();
@@ -52,41 +54,37 @@ public class DepartmentDaoImpl implements DepartmentDao {
         catch (Exception e) {
             isSuccess = false;
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
-        }
-        finally {
-            if (session != null) session.close();
+            msg = e.getMessage();
         }
 
-        if (isSuccess) logger.debug(String.format("The department %s was inserted into the table.", department.toString()));
-
+        logger.debug(msg);
         return isSuccess;
     }
 
     @Override
     public boolean update(Department department) {
+        String msg = String.format("The department %s was updated.", department.toString());
         Transaction transaction = null;
         boolean isSuccess = true;
 
-        try {
-            Session session = sessionFactory.getCurrentSession();
+        try (Session session = sessionFactory.getCurrentSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(department);
             transaction.commit();
         }
         catch (Exception e) {
             isSuccess = false;
+            msg = e.getMessage();
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
         }
 
-        if (isSuccess) logger.debug(String.format("The department %s was updated.", department.toString()));
-
+        logger.debug(msg);
         return isSuccess;
     }
 
     @Override
     public boolean delete(String deptName) {
+        String msg = String.format("The department %s was deleted", deptName);
         String hql = "DELETE Department where name = :deptName1";
         int deletedCount = 0;
         Transaction transaction = null;
@@ -104,11 +102,10 @@ public class DepartmentDaoImpl implements DepartmentDao {
         }
         catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            logger.error(e.getMessage());
+            msg = e.getMessage();
         }
 
-        logger.debug(String.format("The department %s was deleted", deptName));
-
+        logger.debug(msg);
         return deletedCount >= 1 ? true : false;
     }
 

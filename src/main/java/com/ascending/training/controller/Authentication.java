@@ -10,15 +10,11 @@ package com.ascending.training.controller;
 import com.ascending.training.exception.AuthenticationException;
 import com.ascending.training.exception.UserNotFoundException;
 import com.ascending.training.model.User;
-import com.ascending.training.service.UserService;
-import com.ascending.training.util.JwtUtil;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ascending.training.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -26,30 +22,18 @@ import java.util.Map;
 //@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @RequestMapping(value = {"/auth"})
 public class Authentication {
-    //@Autowired
-    private Logger logger;
-    //@Autowired
-    private UserService userService;
+    private AuthService authService;
 
-    @Autowired
-    public Authentication(Logger logger, UserService userService) {
-        this.logger =logger;
-        this.userService = userService;
+    public Authentication(AuthService authService) {
+        this.authService = authService;
     }
-
-    private String errorMsg = "The email or password is not correct.";
-    private String tokenKeyWord = "Authorization";
-    private String tokenType = "Bearer";
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity authenticate(@RequestBody User user) {
-        String token = "";
+        Map<String, String> token = null;
 
         try {
-            logger.debug(user.toString());
-            User u = userService.getUserByCredentials(user.getEmail(), user.getPassword());
-            if (u == null) throw new UserNotFoundException(user);
-            token = JwtUtil.generateToken(u);
+            token = authService.authenticate(user);
         }
         catch (UserNotFoundException userNotFoundexception) {
             throw userNotFoundexception;
@@ -58,9 +42,7 @@ public class Authentication {
             throw new AuthenticationException(e.getMessage(), user);
         }
 
-        Map<String, String> map = new HashMap();
-        map.put(tokenKeyWord, tokenType + " " + token);
-        return ResponseEntity.status(HttpStatus.OK).body(map);
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.GET, produces = "application/json")

@@ -80,4 +80,39 @@ public class AppInitializer extends SpringBootServletInitializer {
 
         SpringApplication.run(AppInitializer.class, args);
     }
+
+    /* Below the code demonstrates the violation of Single Responsibility Principle */
+    /*
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    public SessionFactory sessionFactory() {
+        return HibernateUtil.getSessionFactory();
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Logger logger(InjectionPoint injectionPoint) {
+        return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    public AmazonS3 amazonS3() {
+        return  AmazonS3ClientBuilder
+                .standard()
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withRegion(Regions.US_EAST_2)
+                .build();
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    public AmazonSQS amazonSQS() {
+        return AmazonSQSClientBuilder
+                .standard()
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withRegion(Regions.US_EAST_2)
+                .build();
+    }
+    */
 }

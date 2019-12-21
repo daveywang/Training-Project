@@ -8,7 +8,9 @@
 package com.ascending.training.controller;
 
 import com.ascending.training.service.FileService;
+import com.ascending.training.service.FileServiceImpl;
 import com.ascending.training.service.MessageService;
+import com.ascending.training.service.MessageServiceImpl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -33,14 +35,12 @@ public class FileController {
     private static String queueName;
     @Value("${file.download.dir}")
     private static String fileDownloadDir;
-    //@Autowired
+
     private Logger logger;
-    //@Autowired
     private FileService fileService;
-    //@Autowired
     private MessageService messageService;
 
-    public FileController(Logger logger, FileService fileService, MessageService messageService) {
+    public FileController(Logger logger, FileServiceImpl fileService, MessageServiceImpl messageService) {
         this.logger = logger;
         this.fileService = fileService;
         this.messageService = messageService;
