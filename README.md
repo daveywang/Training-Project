@@ -34,6 +34,8 @@
 
 -Daws.accessKeyId=Your AWS Access Key
 
+-Daws.secretKey=You AWS secret Key
+
 -Daws.queue.name=Your Queue Name
 
 -Dfile.download.dir=The file location for download

@@ -9,7 +9,6 @@ package com.ascending.training.repository;
 
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Department;
-import com.ascending.training.service.DepartmentServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +24,7 @@ import java.util.List;
 @SpringBootTest(classes= AppInitializer.class)
 public class DepartmentDaoTest {
     @Autowired
-    private DepartmentServiceImpl departmentService;
+    private DepartmentDao departmentDao;
     @Autowired
     private Logger logger;
 
@@ -36,7 +35,7 @@ public class DepartmentDaoTest {
 
     @Test
     public void getDepartments() {
-        List<Department> departments = departmentService.getDepartments();
+        List<Department> departments = departmentDao.getDepartments();
         int expectedNumOfDept = 4;
 
         departments.forEach(dept -> System.out.println(dept));
@@ -46,7 +45,7 @@ public class DepartmentDaoTest {
     @Test
     public void getDepartmentByName() {
         String deptName = "HR";
-        Department department = departmentService.getDepartmentByName(deptName);
+        Department department = departmentDao.getDepartmentByName(deptName);
 
         logger.info(department.toString());
         logger.info(department.getEmployees().toString());
@@ -59,24 +58,24 @@ public class DepartmentDaoTest {
     public void updateDepartmentLocation() {
         String deptName = "R&D";
         String location = "11126 Fairhaven Court, Fairfax, VA";
-        Department department = departmentService.getDepartmentByName(deptName);
+        Department department = departmentDao.getDepartmentByName(deptName);
         department.setLocation(location);
-        departmentService.update(department);
-        department = departmentService.getDepartmentByName(deptName);
+        departmentDao.update(department);
+        department = departmentDao.getDepartmentByName(deptName);
         Assert.assertEquals(location, department.getLocation());
     }
 
     @Test
     public void getDepartmentAndEmployeesTest() {
         String deptName = "R&D";
-        List<Object[]> resultList = departmentService.getDepartmentAndEmployees(deptName);
+        List<Object[]> resultList = departmentDao.getDepartmentAndEmployees(deptName);
         Assert.assertEquals(2, resultList.size());
     }
 
     @Test
     public void getDepartmentAndEmployeesAndAccountsTest() {
         String deptName = "R&D";
-        List<Object[]> resultList = departmentService.getDepartmentAndEmployeesAndAccounts(deptName);
+        List<Object[]> resultList = departmentDao.getDepartmentAndEmployeesAndAccounts(deptName);
         Assert.assertEquals(4, resultList.size());
     }
 }
