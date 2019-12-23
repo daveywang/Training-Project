@@ -34,7 +34,7 @@
 
 -Daws.accessKeyId=Your AWS Access Key
 
--Daws.secretKey=You AWS secret Key
+-Daws.secretKey=Your AWS secret Key
 
 -Daws.queue.name=Your Queue Name
 
