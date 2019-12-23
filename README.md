@@ -4,7 +4,7 @@
 
 # The technologies and tools used 
 * Frameworks: Spring Boot, Hibernate.
-* Tools: Entities scanner, JUnit, Mockito, Docker, Flyway, Maven, Git, Logger, Postman.
+* Tools: Entity scanner, JUnit, Mockito, Docker, Flyway, Maven, Git, Logger, Postman.
 * Database: Postgres.
 * The third-party API integration: AWS S3, AWS SQS and SendGrid.
 * OOD Principles: DI, Design patterns and S.O.L.I.D. principles are applied. 
