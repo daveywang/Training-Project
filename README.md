@@ -11,6 +11,15 @@
 * Application Security: JWT and Filter are used for Authentication and Authorization. 
 * Servlet, Listener are implemented for the demonstration.
 
+# Branch information
+
+* [master branch](https://github.com/daveywang/Training-Project/tree/master) maintains the latest code
+* [warmup_branch](https://github.com/daveywang/Training-Project/tree/warm-up) maintains the java models, jdbc, unit test
+* [hibernate_branch](https://github.com/daveywang/Training-Project/tree/hibernate) maintains hibernate implementation
+* [springBoot_branch](https://github.com/daveywang/Training-Project/tree/spring-boot) maintains controllers implementation
+* [jwt_branch](https://github.com/daveywang/Training-Project/tree/jwt) maintains security implementation
+* [aws-s3-sqs_branch](https://github.com/daveywang/Training-Project/tree/aws-s3-sqs)  maintains aws and third party implementation
+
 # JVM options
 * Configurations are defined through JVM Options.
 
@@ -45,15 +54,6 @@
 -Xmn1G
 
 -Xmx1G
-
-# Branch information
-
-* [master branch](https://github.com/daveywang/Training-Project/tree/master) maintains the latest code
-* [warmup_branch](https://github.com/daveywang/Training-Project/tree/warm-up) maintains the java models, jdbc, unit test
-* [hibernate_branch](https://github.com/daveywang/Training-Project/tree/hibernate) maintains hibernate implementation
-* [springBoot_branch](https://github.com/daveywang/Training-Project/tree/spring-boot) maintains controllers implementation
-* [jwt_branch](https://github.com/daveywang/Training-Project/tree/jwt) maintains security implementation
-* [aws-s3-sqs_branch](https://github.com/daveywang/Training-Project/tree/aws-s3-sqs)  maintains aws and third party implementation
 
 # About ASCENDING
 
