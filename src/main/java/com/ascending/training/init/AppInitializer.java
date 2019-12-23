@@ -71,7 +71,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
                        DataSourceAutoConfiguration.class,
                        DataSourceTransactionManagerAutoConfiguration.class,
                        HibernateJpaAutoConfiguration.class})
-@ServletComponentScan(basePackages = {"com.ascending.training.filter"})
+@ServletComponentScan(basePackages = {"com.ascending.training.servlet",
+                                      "com.ascending.training.filter",
+                                      "com.ascending.training.listener"})
 public class AppInitializer extends SpringBootServletInitializer {
     public static void main(String[] args) throws NullPointerException{
         if (HibernateUtil.getSessionFactory() == null) {

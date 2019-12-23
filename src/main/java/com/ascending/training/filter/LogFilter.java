@@ -23,19 +23,22 @@ public class LogFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        logger.debug(">>>>>>>>>> Entering LogFilter...");
         long startTime = System.currentTimeMillis();
         HttpServletRequest req = (HttpServletRequest)request;
         String logInfo = Functions.logInfo(req);
         logger.info(logInfo.replace("responseTime", String.valueOf(System.currentTimeMillis() - startTime)));
         filterChain.doFilter(request, response);
+        logger.debug(">>>>>>>>>> Left LogFilter.");
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
-        // TODO Auto-generated method stub
+        logger.debug(">>>>>>>>>> Initializing LogFilter...");
     }
 
+    @Override
     public void destroy() {
-        // TODO Auto-generated method stub
+        logger.debug(">>>>>>>>>> LogFilter is destroyed!");
     }
 }
