@@ -32,9 +32,9 @@ import java.nio.file.Paths;
 public class FileController {
     /* Inject value from vm options */
     @Value("${aws.queue.name}")
-    private static String queueName;
+    private String queueName;
     @Value("${file.download.dir}")
-    private static String fileDownloadDir;
+    private String fileDownloadDir;
 
     private Logger logger;
     private FileService fileService;

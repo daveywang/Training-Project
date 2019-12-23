@@ -8,6 +8,7 @@
 package com.ascending.training.filter;
 
 import com.ascending.training.service.AuthService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,11 +20,12 @@ import java.io.IOException;
 
 @WebFilter(filterName = "securityFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SecurityFilter implements Filter {
-    @Autowired
-    private AuthService authService;
+    @Autowired private Logger logger;
+    @Autowired private AuthService authService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        logger.debug(">>>>>>>>>> Entering SecurityFilter...");
         HttpServletRequest req = (HttpServletRequest)request;
 
         ((HttpServletResponse)response).addHeader("Access-Control-Allow-Origin", "*");
@@ -38,14 +40,16 @@ public class SecurityFilter implements Filter {
         int statusCode = authService.authorize(req);
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(request, response);
         else ((HttpServletResponse)response).sendError(statusCode, "No valid token found.");
+        logger.debug(">>>>>>>>>> Left SecurityFilter.");
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
-        // TODO Auto-generated method stub
+        logger.debug(">>>>>>>>>> Initializing SecurityFilter...");
     }
 
+    @Override
     public void destroy() {
-        // TODO Auto-generated method stub
+        logger.debug(">>>>>>>>>> SecurityFilter is destroyed!");
     }
 }
