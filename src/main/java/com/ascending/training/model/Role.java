@@ -8,6 +8,7 @@
 package com.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "role")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role extends Model {
     @Column(name = "name")
     private String name;

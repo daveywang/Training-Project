@@ -16,6 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "department")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Department extends Model {
     public Department() {}
     public Department(String name, String description, String location) {
@@ -33,7 +34,7 @@ public class Department extends Model {
     @Column(name = "location")
     private String location;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    //@JsonInclude(JsonInclude.Include.NON_NULL)
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Employee> employees = new HashSet();
 

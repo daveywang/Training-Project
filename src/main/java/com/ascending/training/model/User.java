@@ -7,6 +7,7 @@
 
 package com.ascending.training.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User extends Model {
     @Column(name = "name")
     private String name;

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/auth/*")
+@WebServlet(urlPatterns = "/auth/servlet/*")
 public class AuthServlet extends HttpServlet {
     @Autowired
     private Logger logger;
