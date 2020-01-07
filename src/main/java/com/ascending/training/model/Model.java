@@ -11,9 +11,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class Model {
+public abstract class Model implements Serializable {
+    private static final long serialVersionUID = 742277781584960077L;
+
     @Id
     //@SequenceGenerator(name = "department_id_generator", sequenceName = "department_id_seq", allocationSize = 1)
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_id_generator")

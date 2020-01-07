@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 
 /*
  * Maven skip test:
@@ -66,6 +67,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
     If the dependency spring-boot-starter-data-jpa is in pom.xml, the datasource will be configured automatically,
     but it can be disabled by using exclude to exclude all the classes related to the datasource, database connection.
  */
+/*
+    To use Redis as cache server, run command listed:
+    1. docker pull redis
+    2. docker run --name redis-server -p 6379:6379 -d redis
+*/
 @SpringBootApplication(scanBasePackages = {"com.ascending.training"},
                        exclude = {
                        DataSourceAutoConfiguration.class,
@@ -74,6 +80,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @ServletComponentScan(basePackages = {"com.ascending.training.servlet",
                                       "com.ascending.training.filter",
                                       "com.ascending.training.listener"})
+@EnableCaching
 public class AppInitializer extends SpringBootServletInitializer {
     public static void main(String[] args) throws NullPointerException{
         if (HibernateUtil.getSessionFactory() == null) {

@@ -7,14 +7,15 @@
 
 package com.ascending.training.repository;
 
-import com.ascending.training.model.Employee;
 import com.ascending.training.model.Department;
+import com.ascending.training.model.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -92,6 +93,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    @Cacheable(cacheNames = "employees")
     public List<Employee> getEmployees() {
         String hql = "FROM Employee em left join fetch em.accounts";
 
@@ -103,6 +105,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    @Cacheable(cacheNames = "employees")
     public Employee getEmployeeByName(String name) {
         String hql = "FROM Employee as em left join fetch em.accounts where em.name = :name";
 

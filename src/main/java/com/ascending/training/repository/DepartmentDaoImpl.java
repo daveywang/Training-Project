@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -110,11 +111,13 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
+    @Cacheable(cacheNames = "departments")
     public List<Department> getDepartments() {
         //String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
         //String hql = "FROM Department as dept left join fetch dept.employees";
         String hql = "FROM Department";
         try (Session session = sessionFactory.openSession()) {
+            logger.debug(">>>>>>>>>> Get departments from the Database.");
             Query<Department> query = session.createQuery(hql);
             //return query.list();
             return query.list().stream().distinct().collect(Collectors.toList());
@@ -122,6 +125,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
         }
     }
 
+    @Override
+    @Cacheable(cacheNames = "departments")
     public List<Department> getDepartmentsWithChildren() {
         String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
         //String hql = "FROM Department as dept left join fetch dept.employees";
@@ -134,6 +139,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
+    @Cacheable(cacheNames = "departments")
     public Department getDepartmentByName(String deptName) {
         if (deptName == null) return null;
         String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
@@ -151,6 +157,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
+    @Cacheable(cacheNames = "departments")
     public List<Object[]> getDepartmentAndEmployees(String deptName) {
         if (deptName == null) return null;
 
@@ -172,6 +179,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
+    @Cacheable(cacheNames = "departments")
     public List<Object[]> getDepartmentAndEmployeesAndAccounts(String deptName) {
         if (deptName == null) return null;
 
