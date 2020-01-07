@@ -10,6 +10,7 @@
 * OOD Principles: DI, Design patterns and S.O.L.I.D. principles are applied. 
 * Application Security: JWT and Filter are used for Authentication and Authorization. 
 * Servlet, Listener are implemented for the demonstration.
+* Redis for caching
 
 # Branch information
 
