@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
@@ -48,25 +47,27 @@ public class FileServiceImpl implements FileService {
      *
      */
     @Override
-    public String uploadFile(String bucketName, MultipartFile file) throws IOException {
+    public String uploadFile(String bucketName, MultipartFile file) {
+        String fileUrl = null;
+
         try {
             if (amazonS3.doesObjectExist(bucketName, file.getOriginalFilename())) {
                 logger.info(String.format("The file '%s' exists in the bucket %s", file.getOriginalFilename(), bucketName));
-                return null;
+                return fileUrl;
             }
 
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentType(file.getContentType());
             objectMetadata.setContentLength(file.getSize());
             amazonS3.putObject(bucketName, file.getOriginalFilename(), file.getInputStream(), objectMetadata);
+            fileUrl = getFileUrl(bucketName, file.getOriginalFilename());
             logger.info(String.format("The file name=%s, size=%d was uploaded to bucket %s", file.getOriginalFilename(), file.getSize(), bucketName));
         }
         catch (Exception e) {
             logger.error(e.getMessage());
-            return null;
         }
 
-        return getFileUrl(bucketName, file.getOriginalFilename());
+        return fileUrl;
     }
 
     @Override

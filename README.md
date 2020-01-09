@@ -1,6 +1,6 @@
 # ASCENDING Training course by Liwei Wang
 * The purpose of this project is for training, which demonstrates the technologies used in backend web application. 
-* Please note: The code can be used freely, but PLEASE KEEP THE LICENSE INFORMATION at the top of the programs. 
+* Please note: The code can be used freely, but **PLEASE KEEP THE LICENSE INFORMATION** at the top of the programs. 
 
 # The technologies and tools used 
 * Frameworks: Spring Boot, Hibernate.

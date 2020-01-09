@@ -7,13 +7,22 @@
 
 package com.ascending.training.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+/*
+    All the cacheable objects whose classes must implement Serializable interface
+*/
+
 @MappedSuperclass
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Model implements Serializable {
     private static final long serialVersionUID = 742277781584960077L;
 

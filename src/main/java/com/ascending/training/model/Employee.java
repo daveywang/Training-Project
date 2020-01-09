@@ -7,9 +7,6 @@
 
 package com.ascending.training.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -17,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "employee")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Employee extends Model {
     public Employee() { }
     public Employee(String name, String firstName, String lastName, String email, String address) {
@@ -43,7 +40,7 @@ public class Employee extends Model {
     @Column(name = "address")
     private String address;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;

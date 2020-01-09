@@ -7,8 +7,6 @@
 
 package com.ascending.training.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "department")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Department extends Model {
     public Department() {}
     public Department(String name, String description, String location) {
