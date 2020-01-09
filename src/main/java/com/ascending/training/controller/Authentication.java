@@ -9,6 +9,7 @@ package com.ascending.training.controller;
 
 import com.ascending.training.model.User;
 import com.ascending.training.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class Authentication {
     private AuthService authService;
 
+    @Autowired
     public Authentication(AuthService authService) {
         this.authService = authService;
     }
