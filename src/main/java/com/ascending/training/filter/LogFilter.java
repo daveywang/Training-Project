@@ -27,8 +27,8 @@ public class LogFilter implements Filter {
         long startTime = System.currentTimeMillis();
         HttpServletRequest req = (HttpServletRequest)request;
         String logInfo = Functions.logInfo(req);
-        logger.info(logInfo.replace("responseTime", String.valueOf(System.currentTimeMillis() - startTime)));
         filterChain.doFilter(request, response);
+        logger.info(logInfo.replace("responseTime", String.valueOf(System.currentTimeMillis() - startTime)));
         logger.debug(">>>>>>>>>> Left LogFilter.");
     }
 

@@ -12,6 +12,7 @@ import com.ascending.training.service.FileServiceImpl;
 import com.ascending.training.service.MessageService;
 import com.ascending.training.service.MessageServiceImpl;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -40,6 +41,7 @@ public class FileController {
     private FileService fileService;
     private MessageService messageService;
 
+    @Autowired
     public FileController(Logger logger, FileServiceImpl fileService, MessageServiceImpl messageService) {
         this.logger = logger;
         this.fileService = fileService;
