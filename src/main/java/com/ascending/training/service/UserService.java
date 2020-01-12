@@ -11,6 +11,7 @@ import com.ascending.training.model.User;
 
 public interface UserService {
     boolean save(User user);
+    User getUserById(int id);
     User getUserByEmail(String email);
     User getUserByCredentials(String email, String password);
 }

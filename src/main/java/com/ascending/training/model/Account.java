@@ -7,12 +7,14 @@
 
 package com.ascending.training.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "account")
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Account extends Model {
     public  Account() {}
     public  Account(String accountType, float balance) {

@@ -35,7 +35,7 @@ public class AccountServiceTest {
     @Test
     public void getAccounts() {
         List<Account> accounts = accountService.getAccounts();
-        int expectedNumOfDept = 6;
+        int expectedNumOfDept = 5;
         accounts.forEach(acct -> logger.debug(acct.toString()));
         Assert.assertEquals(expectedNumOfDept, accounts.size());
     }

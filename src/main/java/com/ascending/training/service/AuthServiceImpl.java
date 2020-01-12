@@ -57,6 +57,12 @@ public class AuthServiceImpl implements AuthService {
             for (String s : allowedResources.split(",")) {
                 if (uri.trim().toLowerCase().startsWith(s.trim().toLowerCase())) {
                     statusCode = HttpServletResponse.SC_ACCEPTED;
+
+                    if (claims.getId() != null) {
+                        User user = userService.getUserById(Integer.valueOf(claims.getId()));
+                        req.setAttribute("user", user);
+                    }
+
                     break;
                 }
             }

@@ -126,7 +126,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    @Cacheable(cacheNames = "departments")
+    @Cacheable(cacheNames = "departmentsWithChildren")
     public List<Department> getDepartmentsWithChildren() {
         String hql = "FROM Department as dept left join fetch dept.employees as em left join fetch em.accounts";
         //String hql = "FROM Department as dept left join fetch dept.employees";
@@ -139,7 +139,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    @Cacheable(cacheNames = "departments")
+    @Cacheable(cacheNames = "departmentByName")
     public Department getDepartmentByName(String deptName) {
         if (deptName == null) return null;
         String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
@@ -150,14 +150,15 @@ public class DepartmentDaoImpl implements DepartmentDao {
         Transaction transaction = session.beginTransaction();
         Query<Department> query = session.createQuery(hql);
         query.setParameter("name", deptName.toLowerCase());
-        Department department = query.uniqueResult();
+        List<Department> departments = query.list();
+        Department department = departments.size() > 0 ? departments.get(0) : null;
         transaction.commit();
 
         return department;
     }
 
     @Override
-    @Cacheable(cacheNames = "departments")
+    @Cacheable(cacheNames = "departmentAndEmployees")
     public List<Object[]> getDepartmentAndEmployees(String deptName) {
         if (deptName == null) return null;
 
@@ -179,7 +180,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    @Cacheable(cacheNames = "departments")
+    @Cacheable(cacheNames = "departmentAndEmployeesAndAccounts")
     public List<Object[]> getDepartmentAndEmployeesAndAccounts(String deptName) {
         if (deptName == null) return null;
 

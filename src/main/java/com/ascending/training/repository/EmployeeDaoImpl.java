@@ -112,8 +112,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try (Session session = sessionFactory.openSession()) {
             Query<Employee> query = session.createQuery(hql);
             query.setParameter("name", name);
-
-            return query.uniqueResult();
+            List<Employee> employees = query.list();
+            Employee employee = employees.size() > 0 ? employees.get(0) : null;
+            return employee;
         }
     }
 }
