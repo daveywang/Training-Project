@@ -132,14 +132,15 @@ public class DepartmentDaoImpl2 implements DepartmentDao {
     public Department getDepartmentByName(String deptName) {
         if (deptName == null) return null;
         String hql = "FROM Department as dept left join fetch dept.employees as em left join " +
-                "fetch em.accounts where lower(dept.name) = :name";
+                     "fetch em.accounts where lower(dept.name) = :name";
         //String hql = "FROM Department as dept where lower(dept.name) = :name";
 
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         Query<Department> query = session.createQuery(hql);
         query.setParameter("name", deptName.toLowerCase());
-        Department department = query.uniqueResult();
+        List<Department> departments = query.list();
+        Department department = departments.size() > 0 ? departments.get(0) : null;
         transaction.commit();
 
         return department;

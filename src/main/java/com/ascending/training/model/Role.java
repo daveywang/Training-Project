@@ -9,12 +9,11 @@ package com.ascending.training.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -48,6 +47,10 @@ public class Role extends Model {
     */
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<PropertyExclusion> exclusions = new HashSet();
+
 
     public String getName() {
         return name;
@@ -96,6 +99,14 @@ public class Role extends Model {
     }
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Set<PropertyExclusion> getExclusions() {
+        return exclusions;
+    }
+
+    public void setExclusions(Set<PropertyExclusion> exclusions) {
+        this.exclusions = exclusions;
     }
 
     @Override

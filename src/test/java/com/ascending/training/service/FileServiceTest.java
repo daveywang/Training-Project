@@ -56,7 +56,7 @@ public class FileServiceTest {
     @Test
     public void uploadFile() throws IOException{
         String fileUrl = fileService.uploadFile(bucketName, multipartFile);
-        Assert.assertNotNull(fileUrl);
+        Assert.assertNull(fileUrl);
     }
 
     @Test

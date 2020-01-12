@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+//@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Model implements Serializable {
     private static final long serialVersionUID = 742277781584960077L;

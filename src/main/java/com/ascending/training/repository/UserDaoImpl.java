@@ -51,6 +51,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserById(int id) {
+        String hql = "FROM User as u where id = :id";
+
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(hql);
+            query.setParameter("id", id);
+
+            return query.uniqueResult();
+        }
+    }
+
+    @Override
     public User getUserByEmail(String email) {
         String hql = "FROM User as u where lower(u.email) = :email";
 

@@ -7,7 +7,7 @@
 
 package com.ascending.training.filter;
 
-import com.ascending.training.util.Functions;
+import com.ascending.training.util.AppTools;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +26,7 @@ public class LogFilter implements Filter {
         logger.debug(">>>>>>>>>> Entering LogFilter...");
         long startTime = System.currentTimeMillis();
         HttpServletRequest req = (HttpServletRequest)request;
-        String logInfo = Functions.logInfo(req);
+        String logInfo = AppTools.logInfo(req);
         filterChain.doFilter(request, response);
         logger.info(logInfo.replace("responseTime", String.valueOf(System.currentTimeMillis() - startTime)));
         logger.debug(">>>>>>>>>> Left LogFilter.");

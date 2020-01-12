@@ -67,7 +67,7 @@ public class DepartmentServiceTest {
     @Test
     public void updateDepartmentLocation() {
         String deptName = "R&D";
-        String location = "11126 Fairhaven Court, Fairfax, VA";
+        String location = "Room 101, 999 Washington Ave. Falls Church, VA";
         Department department = departmentService.getDepartmentByName(deptName);
         department.setLocation(location);
         departmentService.update(department);
@@ -86,7 +86,7 @@ public class DepartmentServiceTest {
     public void getDepartmentAndEmployeesAndAccountsTest() {
         String deptName = "R&D";
         List<Object[]> resultList = departmentService.getDepartmentAndEmployeesAndAccounts(deptName);
-        Assert.assertEquals(4, resultList.size());
+        Assert.assertEquals(2, resultList.size());
     }
 
     @Test
