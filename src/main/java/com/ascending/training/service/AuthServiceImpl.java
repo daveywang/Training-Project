@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.exception.AuthenticationException;
 import com.ascending.training.exception.UserNotFoundException;
 import com.ascending.training.model.User;
@@ -60,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
 
                     if (claims.getId() != null) {
                         User user = userService.getUserById(Integer.valueOf(claims.getId()));
-                        req.setAttribute("user", user);
+                        req.setAttribute(AppConstants.REQUEST_USER, user);
                     }
 
                     break;
@@ -73,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
             if (e.getMessage() != null) msg = e.getMessage();
         }
 
-        logger.debug(msg);
+        logger.debug(AppConstants.MSG_PREFIX + msg);
         return statusCode;
     }
 
@@ -81,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
         String tokenKeyWord = "Authorization";
         String tokenType = "Bearer";
 
-        logger.debug(user.toString());
+        logger.debug(AppConstants.MSG_PREFIX + user.toString());
         User u = userService.getUserByCredentials(user.getEmail(), user.getPassword());
         if (u == null) throw new UserNotFoundException(user);
 

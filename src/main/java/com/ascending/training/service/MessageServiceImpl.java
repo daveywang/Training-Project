@@ -2,13 +2,14 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.*;
+import com.ascending.training.constant.AppConstants;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -47,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
             queueUrl = amazonSQS.createQueue(createQueueRequest).getQueueUrl();
         }
 
-        logger.info(queueUrl);
+        logger.info(AppConstants.MSG_PREFIX + queueUrl);
 
         return queueUrl;
     }
@@ -55,7 +56,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public String getQueueUrl(String queueName) {
         GetQueueUrlResult getQueueUrlResult = amazonSQS.getQueueUrl(queueName);
-        logger.info("QueueUrl: " + getQueueUrlResult.getQueueUrl());
+        logger.info(AppConstants.MSG_PREFIX + "QueueUrl: " + getQueueUrlResult.getQueueUrl());
         return getQueueUrlResult.getQueueUrl();
     }
 

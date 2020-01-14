@@ -2,7 +2,7 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
@@ -11,6 +11,7 @@ import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.ascending.training.constant.AppConstants;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -52,7 +53,7 @@ public class FileServiceImpl implements FileService {
 
         try {
             if (amazonS3.doesObjectExist(bucketName, file.getOriginalFilename())) {
-                logger.info(String.format("The file '%s' exists in the bucket %s", file.getOriginalFilename(), bucketName));
+                logger.info(String.format(AppConstants.MSG_PREFIX + "The file '%s' exists in the bucket %s", file.getOriginalFilename(), bucketName));
                 return fileUrl;
             }
 
@@ -61,10 +62,10 @@ public class FileServiceImpl implements FileService {
             objectMetadata.setContentLength(file.getSize());
             amazonS3.putObject(bucketName, file.getOriginalFilename(), file.getInputStream(), objectMetadata);
             fileUrl = getFileUrl(bucketName, file.getOriginalFilename());
-            logger.info(String.format("The file name=%s, size=%d was uploaded to bucket %s", file.getOriginalFilename(), file.getSize(), bucketName));
+            logger.info(String.format(AppConstants.MSG_PREFIX + "The file name=%s, size=%d was uploaded to bucket %s", file.getOriginalFilename(), file.getSize(), bucketName));
         }
         catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(AppConstants.MSG_PREFIX + e.getMessage());
         }
 
         return fileUrl;
@@ -95,10 +96,10 @@ public class FileServiceImpl implements FileService {
             Path path = Paths.get(filePath, multipartFile.getOriginalFilename());
             multipartFile.transferTo(path);
             isSuccess = true;
-            logger.info(String.format("The file %s is saved in the foldr %s", multipartFile.getOriginalFilename(), filePath));
+            logger.info(String.format(AppConstants.MSG_PREFIX + "The file %s is saved in the foldr %s", multipartFile.getOriginalFilename(), filePath));
         }
         catch(Exception e) {
-            logger.error(e.getMessage());
+            logger.error(AppConstants.MSG_PREFIX + e.getMessage());
         }
 
         return isSuccess;

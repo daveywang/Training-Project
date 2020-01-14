@@ -2,12 +2,13 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.repository;
 
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.Role;
 import com.ascending.training.model.User;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -41,7 +42,7 @@ public class UserDaoTest {
     public void getUserByEmail() {
         User user = userDao.getUserByEmail(email);
         Assert.assertNotNull(user);
-        logger.debug(user.toString());
+        logger.debug(AppConstants.MSG_PREFIX + user.toString());
     }
 
     @Ignore
@@ -60,6 +61,6 @@ public class UserDaoTest {
 
     @Test
     public void encryptPassword() {
-        logger.debug("Hashed Password: " + DigestUtils.md5Hex("123456789"));
+        logger.debug(AppConstants.MSG_PREFIX + "Hashed Password: " + DigestUtils.md5Hex("123456789"));
     }
 }

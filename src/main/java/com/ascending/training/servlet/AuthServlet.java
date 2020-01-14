@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 12/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.servlet;
 
+import com.ascending.training.constant.AppConstants;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,6 +36,6 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.debug(">>>>>>>>>>> This is AuthServlet.");
+        logger.debug(AppConstants.MSG_PREFIX + "This is AuthServlet.");
     }
 }

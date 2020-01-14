@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.util;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.interceptor.HibernateInterceptor;
 import com.github.fluent.hibernate.cfg.scanner.EntityScanner;
 import org.hibernate.SessionFactory;
@@ -15,7 +16,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -24,8 +25,14 @@ import java.util.Properties;
 @Component
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
-    private static Logger logger = LoggerFactory.getLogger(HibernateUtil.class);
+    private static Logger logger;
     private static String C3P0_MIN_SIZE;
+
+    @Autowired
+    public HibernateUtil(Logger logger) {
+        this.logger = logger;
+    }
+
 
     /* Define JVM options
     -Ddatabase.driver=org.postgresql.Driver
@@ -50,7 +57,7 @@ public class HibernateUtil {
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             }
             catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error(AppConstants.MSG_PREFIX + e.getMessage());
             }
         }
 
@@ -92,7 +99,7 @@ public class HibernateUtil {
             configuration.load(inputStream);
         }
         catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(AppConstants.MSG_PREFIX + e.getMessage());
         }
 
         return configuration;

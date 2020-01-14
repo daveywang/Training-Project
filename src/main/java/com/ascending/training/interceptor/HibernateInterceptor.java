@@ -2,12 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.interceptor;
 
-import com.ascending.training.model.Model;
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.util.AppTools;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
@@ -45,37 +45,12 @@ public class HibernateInterceptor extends EmptyInterceptor {
 
     private boolean applyPropertyFilter(String method, Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         /* Apply property filter on the object dynamically based on the user's role */
-        if (entity instanceof Model) {
-            AppTools.applyPropertyFilter(entity.getClass().getSimpleName(), state, propertyNames);
-            return true;
-        }
-
-        /* Demonstrate the data can be changed before the data is processed */
-        /* The below code violates Liskvo Substitution Principle (LSP)
-        if (entity instanceof Department) {
-            //Change the property description
-            state[0] = "Changed by Hibernate interceptor.";
-            return true;
-        }
-        if (entity instanceof Employee) {
-            //Change the property email
-            state[3] = (String)state[3] + " - Added by Hibernate interceptor.";
-            return true;
-        }
-        else if (entity instanceof Account) {
-            //Change the property balance
-            state[1] = (double)state[1] / 10.0;
-            return true;
-        }
-        */
-
-        return false;
+        return AppTools.applyPropertyFilter(entity.getClass().getSimpleName(), state, propertyNames);
     }
 
     private void showInfo(String method, Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-        logger.info(String.format(">>>>>>>>>> [%s - %s] - entity: %s", method, entity.getClass().getSimpleName(), entity.toString()));
-        logger.info(String.format(">>>>>>>>>> [%s - %s] - id: %s", method, entity.getClass().getSimpleName(), id));
-        logger.info(String.format(">>>>>>>>>> [%s - %s] - propertyNames: %s", method, entity.getClass().getSimpleName(), Arrays.deepToString(propertyNames)));
-        logger.info(String.format(">>>>>>>>>> [%s - %s] - types: %s", method, entity.getClass().getSimpleName(), Arrays.deepToString(types)));
+        //logger.debug(String.format(AppConstants.MSG_PREFIX + "[%s - %s] - entity: %s", method, entity.getClass().getSimpleName(), entity.toString()));
+        logger.debug(String.format(AppConstants.MSG_PREFIX + "[%s - %s] - entity: %s, propertyNames: %s", method, entity.getClass().getSimpleName(), entity.toString(), Arrays.deepToString(propertyNames)));
+        //logger.debug(String.format(AppConstants.MSG_PREFIX + "[%s - %s] - types: %s", method, entity.getClass().getSimpleName(), Arrays.deepToString(types)));
     }
 }

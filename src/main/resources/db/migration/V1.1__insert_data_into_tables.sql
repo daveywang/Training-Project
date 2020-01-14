@@ -1,3 +1,10 @@
+/*
+ *  Copyright 2019, Liwei Wang <daveywang@live.com>.
+ *  All rights reserved.
+ *  Author: Liwei Wang
+ *  Date: 04/2019
+ */
+
 insert into department (name, description, location) values
 ('HR', 'Human Resource', 'Room 100, 999 Washington Ave. Falls Church, VA'),
 ('R&D', 'Research and Development', 'Room 101, 999 Washington Ave. Falls Church, VA'),

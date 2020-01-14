@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.init.AppInitializer;
 import org.junit.After;
 import org.junit.Assert;
@@ -40,7 +41,7 @@ public class FileServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        logger.info(">>>>>>>>>> Start testing...");
+        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
 
         File file = new File("/Users/liweiwang/ascending/lecture/README.md");
         FileInputStream input = new FileInputStream(file);
@@ -50,7 +51,7 @@ public class FileServiceTest {
 
     @After
     public void tearDown() {
-        logger.info(">>>>>>>>>> End test");
+        logger.info(AppConstants.MSG_PREFIX + "End test");
     }
 
     @Test
