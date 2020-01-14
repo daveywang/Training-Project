@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 12/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.listener;
 
+import com.ascending.training.constant.AppConstants;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,13 +22,13 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        logger.debug(">>>>>>>>>> The Application is started.");
+        logger.debug(AppConstants.MSG_PREFIX + "The Application is started.");
         String serverInfo = servletContextEvent.getServletContext().getServerInfo();
-        logger.debug(">>>>>>>>>> The server information: " + serverInfo);
+        logger.debug(AppConstants.MSG_PREFIX + "The server information: " + serverInfo);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        logger.debug(">>>>>>>>>> The Application is destroyed!");
+        logger.debug(AppConstants.MSG_PREFIX + "The Application is destroyed!");
     }
 }

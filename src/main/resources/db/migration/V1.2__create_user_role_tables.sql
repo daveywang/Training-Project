@@ -1,3 +1,10 @@
+/*
+ *  Copyright 2019, Liwei Wang <daveywang@live.com>.
+ *  All rights reserved.
+ *  Author: Liwei Wang
+ *  Date: 04/2019
+ */
+
 --DROP SEQUENCE IF EXISTS user_id_seq;
 --DROP SEQUENCE IF EXISTS role_id_seq;
 

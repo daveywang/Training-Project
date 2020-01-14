@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.repository;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.interceptor.HibernateInterceptor;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Department;
@@ -58,7 +59,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             msg = e.getMessage();
         }
 
-        logger.debug(msg);
+        logger.debug(AppConstants.MSG_PREFIX + msg);
         return isSuccess;
     }
 
@@ -79,7 +80,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             if (transaction != null) transaction.rollback();
         }
 
-        logger.debug(msg);
+        logger.debug(AppConstants.MSG_PREFIX + msg);
         return isSuccess;
     }
 
@@ -106,7 +107,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             msg = e.getMessage();
         }
 
-        logger.debug(msg);
+        logger.debug(AppConstants.MSG_PREFIX + msg);
         return deletedCount >= 1 ? true : false;
     }
 
@@ -117,7 +118,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
         //String hql = "FROM Department as dept left join fetch dept.employees";
         String hql = "FROM Department";
         try (Session session = sessionFactory.openSession()) {
-            logger.debug(">>>>>>>>>> Get departments from the Database.");
+            logger.debug(AppConstants.MSG_PREFIX + "Get departments from the Database.");
             Query<Department> query = session.createQuery(hql);
             //return query.list();
             return query.list().stream().distinct().collect(Collectors.toList());
@@ -171,8 +172,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
             List<Object[]> resultList = query.list();
 
             for (Object[] obj : resultList) {
-                logger.debug(((Department)obj[0]).toString());
-                logger.debug(((Employee)obj[1]).toString());
+                logger.debug(AppConstants.MSG_PREFIX + ((Department)obj[0]).toString());
+                logger.debug(AppConstants.MSG_PREFIX + ((Employee)obj[1]).toString());
             }
 
             return resultList;
@@ -196,9 +197,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
             List<Object[]> resultList = query.list();
 
             for (Object[] obj : resultList) {
-                logger.debug(((Department)obj[0]).toString());
-                logger.debug(((Employee)obj[1]).toString());
-                logger.debug(((Account)obj[2]).toString());
+                logger.debug(AppConstants.MSG_PREFIX + ((Department)obj[0]).toString());
+                logger.debug(AppConstants.MSG_PREFIX + ((Employee)obj[1]).toString());
+                logger.debug(AppConstants.MSG_PREFIX + ((Account)obj[2]).toString());
             }
 
             return resultList;

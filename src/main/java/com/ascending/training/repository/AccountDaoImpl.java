@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.repository;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Employee;
 import org.hibernate.Session;
@@ -63,7 +64,7 @@ public class AccountDaoImpl implements AccountDao {
             msg = e.getMessage();
         }
 
-        logger.debug(msg);
+        logger.debug(AppConstants.MSG_PREFIX + msg);
         return isSuccess;
     }
 

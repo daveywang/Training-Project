@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.controller;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.service.FileService;
 import com.ascending.training.service.FileServiceImpl;
 import com.ascending.training.service.MessageService;
@@ -65,11 +66,11 @@ public class FileController {
                 responseEntity = ResponseEntity.status(HttpServletResponse.SC_OK).body(msg);
             }
 
-            logger.info(msg);
+            logger.info(AppConstants.MSG_PREFIX + msg);
         }
         catch (Exception e) {
             responseEntity = ResponseEntity.status(HttpServletResponse.SC_NOT_ACCEPTABLE).body(e.getMessage());
-            logger.error(e.getMessage());
+            logger.error(AppConstants.MSG_PREFIX + e.getMessage());
         }
 
         return responseEntity;
@@ -92,11 +93,11 @@ public class FileController {
             msg = String.format("The file %s was downloaded", resource.getFilename());
             //Send message to SQS
             messageService.sendMessage(queueName, msg);
-            logger.debug(msg);
+            logger.debug(AppConstants.MSG_PREFIX + msg);
         }
         catch (Exception ex) {
             responseEntity = ResponseEntity.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).body(ex.getMessage());
-            logger.debug(ex.getMessage());
+            logger.debug(AppConstants.MSG_PREFIX + ex.getMessage());
         }
 
         return responseEntity;

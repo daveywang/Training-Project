@@ -2,7 +2,7 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 /*
@@ -11,6 +11,7 @@
 
 package com.ascending.training.jdbc;
 
+import com.ascending.training.constant.AppConstants;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +31,12 @@ public class DemoTest {
 
     @Before
     public void initTest() {
-        logger.info(">>>>>>>>>> Before: start unit testing... <<<<<<<<<<");
+        logger.info(AppConstants.MSG_PREFIX + "Before: start unit testing... <<<<<<<<<<");
     }
 
     @After
     public void endTest() {
-        logger.info(">>>>>>>>>> After: unite test are done. <<<<<<<<<<<\n");
+        logger.info(AppConstants.MSG_PREFIX + "After: unite test are done. <<<<<<<<<<<\n");
     }
 
     @Test

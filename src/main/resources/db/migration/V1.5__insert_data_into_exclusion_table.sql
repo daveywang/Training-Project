@@ -1,3 +1,10 @@
+/*
+ *  Copyright 2019, Liwei Wang <daveywang@live.com>.
+ *  All rights reserved.
+ *  Author: Liwei Wang
+ *  Date: 04/2019
+ */
+
 insert into property_exclusion (class_name, excluded_properties, role_id) values
 ('Department', 'location', 1),
 ('Department', 'location, description', 2),

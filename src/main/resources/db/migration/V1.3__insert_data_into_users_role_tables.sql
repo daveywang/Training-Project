@@ -1,3 +1,10 @@
+/*
+ *  Copyright 2019, Liwei Wang <daveywang@live.com>.
+ *  All rights reserved.
+ *  Author: Liwei Wang
+ *  Date: 04/2019
+ */
+
 insert into role (name, allowed_resource, allowed_read, allowed_create, allowed_update, allowed_delete) values
 ('Admin', '/', 'Y', 'Y', 'Y', 'Y'),
 ('Manager', '/depts,/departments,/employees,/ems,/acnts,/accounts', 'Y', 'Y', 'Y', 'N'),

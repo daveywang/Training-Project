@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Department;
 import com.ascending.training.model.Employee;
@@ -48,7 +49,7 @@ public class DepartmentServiceTest {
         List<Department> departments = departmentService.getDepartments();
         int expectedNumOfDept = 4;
 
-        departments.forEach(dept -> logger.info(dept.toString()));
+        departments.forEach(dept -> logger.info(AppConstants.MSG_PREFIX + dept.toString()));
         Assert.assertEquals(expectedNumOfDept, departments.size());
     }
 
@@ -57,9 +58,9 @@ public class DepartmentServiceTest {
         String deptName = "R&D";
         Department department = departmentService.getDepartmentByName(deptName);
 
-        logger.info(department.toString());
-        logger.info(department.getEmployees().toString());
-        logger.info(department.getEmployees().stream().findFirst().get().getAccounts().toString());
+        logger.info(AppConstants.MSG_PREFIX + department.toString());
+        logger.info(AppConstants.MSG_PREFIX + department.getEmployees().toString());
+        logger.info(AppConstants.MSG_PREFIX + department.getEmployees().stream().findFirst().get().getAccounts().toString());
 
         Assert.assertEquals(deptName, department.getName());
     }

@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.repository;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.Department;
 import com.ascending.training.util.HibernateUtil;
 import org.hibernate.Session;
@@ -31,10 +32,10 @@ public class HibernateMappingTest {
             departments = query.list();
         }
         catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error(AppConstants.MSG_PREFIX + e.getMessage());
         }
 
-        departments.forEach(dept -> logger.info(dept.toString()));
+        departments.forEach(dept -> logger.info(AppConstants.MSG_PREFIX + dept.toString()));
 
         Assert.assertNotNull(departments);
     }

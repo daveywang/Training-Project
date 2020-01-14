@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.filter;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.util.AppTools;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class LogFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        logger.debug(">>>>>>>>>> Entering LogFilter...");
+        logger.debug(AppConstants.MSG_PREFIX + "Entering LogFilter...");
         long startTime = System.currentTimeMillis();
         HttpServletRequest req = (HttpServletRequest)request;
 <<<<<<< HEAD
@@ -32,17 +33,17 @@ public class LogFilter implements Filter {
         String logInfo = AppTools.logInfo(req);
 >>>>>>> aws-s3-sqs
         filterChain.doFilter(request, response);
-        logger.info(logInfo.replace("responseTime", String.valueOf(System.currentTimeMillis() - startTime)));
-        logger.debug(">>>>>>>>>> Left LogFilter.");
+        logger.info(AppConstants.MSG_PREFIX + logInfo.replace("responseTime", String.valueOf(System.currentTimeMillis() - startTime)));
+        logger.debug(AppConstants.MSG_PREFIX + "Left LogFilter.");
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
-        logger.debug(">>>>>>>>>> Initializing LogFilter...");
+        logger.debug(AppConstants.MSG_PREFIX + "Initializing LogFilter...");
     }
 
     @Override
     public void destroy() {
-        logger.debug(">>>>>>>>>> LogFilter is destroyed!");
+        logger.debug(AppConstants.MSG_PREFIX + "LogFilter is destroyed!");
     }
 }

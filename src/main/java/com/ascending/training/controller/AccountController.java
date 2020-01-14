@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.controller;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Employee;
 import com.ascending.training.service.AccountService;
@@ -51,7 +52,7 @@ public class AccountController {
     //@PostMapping(value = "/{employeeName}", consumes = "application/json")
     @RequestMapping(value = "/{employeeName}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public String creatAccount(@PathVariable String employeeName, @RequestBody Account account) {
-        logger.debug(String.format("Employee name: %s, account: %s", employeeName, account.toString()));
+        logger.debug(String.format(AppConstants.MSG_PREFIX + "Employee name: %s, account: %s", employeeName, account.toString()));
         String msg = "The account was created.";
         boolean isSuccess = accountService.save(account, employeeName);
         if (!isSuccess) msg = "The account was not created.";

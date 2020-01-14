@@ -2,12 +2,13 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.repository;
 
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Employee;
@@ -15,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,8 +28,8 @@ import java.util.Set;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= AppInitializer.class)
 public class EmployeeDaoTest {
-    @Autowired
-    private EmployeeDao employeeDao;
+    @Autowired private EmployeeDao employeeDao;
+    @Autowired private Logger logger;
     private String deptName = "HR";
 
     @Before
@@ -38,7 +40,7 @@ public class EmployeeDaoTest {
     public void getEmployees() {
         List<Employee> employees = employeeDao.getEmployees();
         int expectedNumOfDept = 5;
-        employees.forEach(em -> System.out.println(em.toString()));
+        employees.forEach(em -> logger.debug(AppConstants.MSG_PREFIX + em.toString()));
         Assert.assertEquals(expectedNumOfDept, employees.size());
     }
 

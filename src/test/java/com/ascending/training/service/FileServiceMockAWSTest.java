@@ -2,12 +2,13 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.init.AppInitializer;
 import org.junit.After;
 import org.junit.Assert;
@@ -60,7 +61,7 @@ public class FileServiceMockAWSTest {
 
     @Before
     public void setUp() throws MalformedURLException, FileNotFoundException, IOException {
-        logger.info(">>>>>>>>>> Start testing...");
+        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
 
         //Mocks are initialized before each test method
         MockitoAnnotations.initMocks(this);
@@ -85,7 +86,7 @@ public class FileServiceMockAWSTest {
 
     @After
     public void tearDown() {
-        logger.info(">>>>>>>>>> End test");
+        logger.info(AppConstants.MSG_PREFIX + "End test");
     }
 
     @Test

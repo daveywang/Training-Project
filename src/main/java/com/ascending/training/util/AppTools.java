@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.util;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.PropertyExclusion;
 import com.ascending.training.model.Role;
 import com.ascending.training.model.User;
@@ -74,10 +75,12 @@ public class AppTools {
                 .append(formData).toString();
     }
 
-    public static void applyPropertyFilter(String className, Object[] state, String[] propertyNames) {
+    public static boolean applyPropertyFilter(String className, Object[] state, String[] propertyNames) {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        boolean isStateModified = false;
+
         if (request != null) {
-            User user = (User)request.getAttribute("user");
+            User user = (User)request.getAttribute(AppConstants.REQUEST_USER);
             if (user != null) {
                 List<String> properties = Arrays.stream(propertyNames).map(s -> s.toLowerCase()).collect(Collectors.toList());
                 List<Set<String>> exclusionList = new ArrayList();
@@ -85,7 +88,7 @@ public class AppTools {
                 for (Role role : user.getRoles()) {
                     /* Get exclusions for the object of the class being processed */
                     Set<PropertyExclusion> classExclusions = role.getExclusions().stream().filter(e -> e.getClassName().equalsIgnoreCase(className)).collect(Collectors.toSet());
-                    logger.debug(String.format(">>>>>>>>>> User: %s, Role: %s, Class: %s, Exclusions: %s", user.getName(), role.getName(), className, classExclusions));
+                    logger.debug(String.format(AppConstants.MSG_PREFIX + "User: %s, Role: %s, Class: %s, Exclusions: %s", user.getName(), role.getName(), className, classExclusions));
 
                     /* Put all role's exclusions of the object of the class being processed in the exclusionList */
                     if (classExclusions.isEmpty()) exclusionList.add(new HashSet());
@@ -95,8 +98,8 @@ public class AppTools {
                     }
                 }
 
-                logger.debug(String.format(">>>>>>>>>> Properties: %s", properties));
-                logger.debug(String.format(">>>>>>>>>> Exclusions: %s", exclusionList));
+                //logger.debug(String.format(AppConstants.MSG_PREFIX + "Properties: %s", properties));
+                logger.debug(String.format(AppConstants.MSG_PREFIX + "Exclusions: %s", exclusionList));
 
                 /*
                    Intersect all exclusions in the exclusionList, the result is in commonExclusions.
@@ -106,7 +109,7 @@ public class AppTools {
                     commonExclusions.retainAll(exclusionList.get(i));
                 }
 
-                logger.debug(String.format(">>>>>>>>>> Common Exclusions: %s", commonExclusions));
+                logger.debug(String.format(AppConstants.MSG_PREFIX + "Common Exclusions: %s", commonExclusions));
 
                 /*
                    Set the value of property to be default value based on the commonExclusions,
@@ -121,10 +124,13 @@ public class AppTools {
                         else if (state[index] instanceof Boolean) state[index] = false;
                         else if (state[index] instanceof Byte) state[index] = 0;
                         else state[index] = null;
+                        isStateModified = true;
                     }
                }
             }
         }
+
+        return isStateModified;
     }
 
 }

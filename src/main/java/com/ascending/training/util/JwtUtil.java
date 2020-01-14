@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.util;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.Role;
 import com.ascending.training.model.User;
 import io.jsonwebtoken.Claims;
@@ -14,7 +15,8 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -22,15 +24,21 @@ import java.security.Key;
 import java.util.Date;
 import java.util.List;
 
-
+@Component
 public class JwtUtil {
-    private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private static Logger logger;
     private static final String SECRET_KEY = System.getProperty("secret.key");
     private static final String ISSUER = "com.ascending";
     private static final long EXPIRATION_TIME = 86400 * 1000;
 
+    @Autowired
+    public JwtUtil(Logger logger) {
+        this.logger = logger;
+    }
+
+
     public static String generateToken(User user) {
-        logger.debug(user.toString());
+        logger.debug(AppConstants.MSG_PREFIX + user.toString());
         //JWT signature algorithm using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         //Sign JWT with SECRET_KEY
@@ -76,7 +84,7 @@ public class JwtUtil {
                 .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .parseClaimsJws(token).getBody();
 
-        logger.debug("Claims: " + claims.toString());
+        logger.debug(AppConstants.MSG_PREFIX + "Claims: " + claims.toString());
 
         return claims;
     }

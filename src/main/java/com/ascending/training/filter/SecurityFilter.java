@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.filter;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.service.AuthService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        logger.debug(">>>>>>>>>> Entering SecurityFilter...");
+        logger.debug(AppConstants.MSG_PREFIX + "Entering SecurityFilter...");
         HttpServletRequest req = (HttpServletRequest)request;
 
         ((HttpServletResponse)response).addHeader("Access-Control-Allow-Origin", "*");
@@ -40,16 +41,16 @@ public class SecurityFilter implements Filter {
         int statusCode = authService.authorize(req);
         if (statusCode == HttpServletResponse.SC_ACCEPTED) filterChain.doFilter(request, response);
         else ((HttpServletResponse)response).sendError(statusCode, "No valid token found.");
-        logger.debug(">>>>>>>>>> Left SecurityFilter.");
+        logger.debug(AppConstants.MSG_PREFIX + "Left SecurityFilter.");
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
-        logger.debug(">>>>>>>>>> Initializing SecurityFilter...");
+        logger.debug(AppConstants.MSG_PREFIX + "Initializing SecurityFilter...");
     }
 
     @Override
     public void destroy() {
-        logger.debug(">>>>>>>>>> SecurityFilter is destroyed!");
+        logger.debug(AppConstants.MSG_PREFIX + "SecurityFilter is destroyed!");
     }
 }

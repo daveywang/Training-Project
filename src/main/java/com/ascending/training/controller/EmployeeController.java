@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.controller;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.model.Employee;
 import com.ascending.training.service.EmployeeService;
 import com.ascending.training.service.EmployeeServiceImpl;
@@ -41,7 +42,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/{deptName}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public String creatEmployee(@RequestBody Employee employee, @PathVariable String deptName) {
-        logger.debug(String.format("Department name: %s, employee: %s", deptName, employee.toString()));
+        logger.debug(String.format(AppConstants.MSG_PREFIX + "Department name: %s, employee: %s", deptName, employee.toString()));
         String msg = "The employee was created.";
         boolean isSuccess = employeeService.save(employee, deptName);
 

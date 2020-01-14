@@ -2,7 +2,7 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
@@ -12,6 +12,7 @@ import com.amazonaws.services.sqs.model.CreateQueueRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.QueueDoesNotExistException;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.init.AppInitializer;
 import org.junit.After;
 import org.junit.Before;
@@ -52,7 +53,7 @@ public class MessageServiceMockAWSTest {
 
     @Before
     public void setUp() {
-        logger.info(">>>>>>>>>> Start testing...");
+        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
         messages = new ArrayList();
         messages.add(new Message());
         //Mocks are initialized before each test method
@@ -64,7 +65,7 @@ public class MessageServiceMockAWSTest {
 
     @After
     public void tearDown() {
-        logger.info(">>>>>>>>>> End test");
+        logger.info(AppConstants.MSG_PREFIX + "End test");
     }
 
     @Test

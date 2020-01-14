@@ -2,11 +2,12 @@
  *  Copyright 2019, Liwei Wang <daveywang@live.com>.
  *  All rights reserved.
  *  Author: Liwei Wang
- *  Date: 06/2019
+ *  Date: 04/2019
  */
 
 package com.ascending.training.service;
 
+import com.ascending.training.constant.AppConstants;
 import com.ascending.training.init.AppInitializer;
 import com.ascending.training.model.Account;
 import com.ascending.training.model.Employee;
@@ -36,7 +37,7 @@ public class AccountServiceTest {
     public void getAccounts() {
         List<Account> accounts = accountService.getAccounts();
         int expectedNumOfDept = 5;
-        accounts.forEach(acct -> logger.debug(acct.toString()));
+        accounts.forEach(acct -> logger.debug(AppConstants.MSG_PREFIX + acct.toString()));
         Assert.assertEquals(expectedNumOfDept, accounts.size());
     }
 
@@ -45,8 +46,8 @@ public class AccountServiceTest {
         int id = 2;
         Account account = accountService.getAccountById(id);
         Assert.assertEquals(id, account.getId());
-        logger.debug(account.toString());
+        logger.debug(AppConstants.MSG_PREFIX + account.toString());
         Employee employee = account.getEmployee();
-        logger.debug(employee.getEmail());
+        logger.debug(AppConstants.MSG_PREFIX + employee.getEmail());
     }
 }
