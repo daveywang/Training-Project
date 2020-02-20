@@ -3,7 +3,7 @@
 * Please note: The code can be used freely, but ![#f03c15](https://placehold.it/13/f03c15/000000?text=+) **PLEASE KEEP THE LICENSE INFORMATION** ![#f03c15](https://placehold.it/13/f03c15/000000?text=+) at the top of the programs. 
 
 # The technologies and tools used 
-* Frameworks: Spring Boot, Hibernate.
+* Frameworks: Spring/Spring Boot, Hibernate.
 * Tools: Entity scanner, JUnit, Mockito, Docker, Flyway, Maven, Git, Logger, Postman.
 * Database: Postgres.
 * The third-party API integration: AWS S3, AWS SQS and SendGrid.
