@@ -43,8 +43,9 @@ public class MessageServiceMockAWSTest {
     private Logger logger;
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private AmazonSQS amazonSQS;
-    @InjectMocks
-    private MessageServiceImpl messageService;
+    //@InjectMocks
+    //private MessageServiceImpl messageService;
+    private MessageService messageService;
 
     private String queueName = "training_queue_ascending_com";
     private String fakeQueueUrl = "www.fakeQueueUrl.com/abc/123/fake";
@@ -52,12 +53,17 @@ public class MessageServiceMockAWSTest {
     private List<Message> messages;
 
     @Before
-    public void setUp() {
-        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
+    public void setup() {
         messages = new ArrayList();
         messages.add(new Message());
-        //Mocks are initialized before each test method
+        /* Mocks are initialized before each test method,
+           The object can not be mocked object until the statement MockitoAnnotations.initMocks(this) is executed,
+         */
         MockitoAnnotations.initMocks(this);
+        /* The statement that pass the mocked the object amazonSQS should be after MockitoAnnotations.initMocks(this) */
+        messageService = new MessageServiceImpl(logger, amazonSQS);
+
+        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
         when(amazonSQS.getQueueUrl(anyString()).getQueueUrl()).thenReturn(fakeQueueUrl);
         when(amazonSQS.receiveMessage(any(ReceiveMessageRequest.class)).getMessages()).thenReturn(messages);
         when(amazonSQS.createQueue(any(CreateQueueRequest.class)).getQueueUrl()).thenReturn(fakeQueueUrl);

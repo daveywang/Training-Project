@@ -11,6 +11,7 @@
 * Application Security: JWT and Filter are used for Authentication and Authorization. 
 * Servlet, Listener are implemented for the demonstration.
 * Redis for caching
+* Implemented the Object Properties Filter that can hide properties(data) of objects dynamically based on the user's role.
 
 # Branch information
 

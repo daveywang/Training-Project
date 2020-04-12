@@ -40,7 +40,7 @@ public class FileServiceTest {
     private String path;
 
     @Before
-    public void setUp() throws IOException {
+    public void setup() throws IOException {
         logger.info(AppConstants.MSG_PREFIX + "Start testing...");
 
         File file = new File("/Users/liweiwang/ascending/lecture/README.md");

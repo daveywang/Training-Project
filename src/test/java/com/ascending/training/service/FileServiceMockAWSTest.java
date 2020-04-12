@@ -46,7 +46,7 @@ public class FileServiceMockAWSTest {
      *  We can also use constructor injection to inject mocked and real objects into the FileService
      */
 
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS) private AmazonS3 amazonS3;
+    @Mock private AmazonS3 amazonS3;
     @Autowired
     @Spy
     private Logger logger;  //autowired the logger and inject it into the object fileService
@@ -60,12 +60,10 @@ public class FileServiceMockAWSTest {
     //private String path;
 
     @Before
-    public void setUp() throws MalformedURLException, FileNotFoundException, IOException {
-        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
-
+    public void setup() throws MalformedURLException, FileNotFoundException, IOException {
         //Mocks are initialized before each test method
         MockitoAnnotations.initMocks(this);
-
+        logger.info(AppConstants.MSG_PREFIX + "Start testing...");
         fakeFileUrl = new URL("http://www.fakeQueueUrl.com/abc/123/fake");
         //File file = new File("/Users/liweiwang/ascending/lecture/README.md");
         //FileInputStream input = new FileInputStream(file);
@@ -110,7 +108,7 @@ public class FileServiceMockAWSTest {
         String path = " ";
 
         //Annotation @Mock can only be used for calls variables
-        //create mocked object fshttps://tomcat.apache.org/download-80.cgi
+        //create mocked object fs https://tomcat.apache.org/download-80.cgi
         FileServiceImpl fs = Mockito.mock(FileServiceImpl.class);
 
         //Stubbing
