@@ -73,7 +73,7 @@ public class AppTools {
     public static boolean applyPropertyFilter(String className, Object[] state, String[] propertyNames) {
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         boolean isStateModified = false;
-        
+
         return isStateModified;
     }
 
