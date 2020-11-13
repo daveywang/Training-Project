@@ -14,10 +14,10 @@ insert into department (name, description, location) values
 commit;
 
 insert into employee (name, first_name, last_name, email, address, department_id) values
-('dwang', 'David', 'Wang', 'david.wang@training.ascendingdc.com', '999 Washington Ave, Fairfax, VA 22030', 2),
-('rhang', 'Ryo', 'Hang', 'ryo.hang@training.ascendingdc.com', '998 Washington Ave, Fairfax, VA 22030', 2),
-('gzhang', 'Gloria', 'Zhang', 'gloria.zhang@training.ascendingdc.com', '997 Washington Ave, Fairfax, VA 22030', 1),
-('xhuang', 'Xingyue', 'Huang', 'xingyue.Hang@training.ascendingdc.com', '996 Washington Ave, Fairfax, VA 22030', 3)
+('dwang', 'David', 'Wang', 'david.wang@training.liwei.org', '999 Washington Ave, Fairfax, VA 22030', 2),
+('rhang', 'Ryo', 'Hang', 'ryo.hang@training.liwei.org', '998 Washington Ave, Fairfax, VA 22030', 2),
+('gzhang', 'Gloria', 'Zhang', 'gloria.zhang@training.liwei.org', '997 Washington Ave, Fairfax, VA 22030', 1),
+('xhuang', 'Xingyue', 'Huang', 'xingyue.Hang@training.liwei.org', '996 Washington Ave, Fairfax, VA 22030', 3)
 ;
 commit;
 
