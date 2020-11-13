@@ -37,7 +37,7 @@
 
 -Dlogging.level.org.springframework=INFO
 
--Dlogging.level.com.ascending=TRACE
+-Dlogging.level.org.liwei=TRACE
 
 -Dserver.port=8080
 
