@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(value = {"/files"})
@@ -37,6 +38,8 @@ public class FileController {
     private String queueName;
     @Value("${file.download.dir}")
     private String fileDownloadDir;
+    @Value( "${base.path}" )
+    private String basePath;
 
     private Logger logger;
     private FileService fileService;
@@ -100,6 +103,54 @@ public class FileController {
             logger.debug(AppConstants.MSG_PREFIX + ex.getMessage());
         }
 
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity uploadFiles(@RequestParam String filePath, @RequestParam("files") MultipartFile[] files) {
+        String path = basePath + File.separator + filePath;
+        logger.info(AppConstants.MSG_PREFIX + path);
+
+        if (files == null || (files.length == 0)) {
+            String msg = String.format("Please select one or more files to upload");
+            return ResponseEntity.status(HttpServletResponse.SC_NOT_ACCEPTABLE).body(msg);
+        }
+
+        if (!fileService.isPathExist(path)) {
+            String msg = String.format("The path %s doesn't exist", path);
+            return ResponseEntity.status(HttpServletResponse.SC_NOT_FOUND).body(msg);
+        }
+
+        ArrayList<String> succeedFiles = new ArrayList();
+        ArrayList<String> failedFiles = new ArrayList();
+        ArrayList<String> existedFiles = new ArrayList();
+
+        for (MultipartFile file : files) {
+            try {
+                if (!fileService.isFileExist(path + File.separator + file.getOriginalFilename())) {
+                    fileService.saveFile(file, path);
+                    succeedFiles.add(file.getOriginalFilename());
+                }
+                else {
+                    existedFiles.add(file.getOriginalFilename());
+                }
+            }
+            catch (Exception e) {
+                failedFiles.add(file.getOriginalFilename());
+                logger.error(AppConstants.MSG_PREFIX + e.getMessage());
+            }
+        }
+
+        String msg1 = String.format("The files %s were uploaded to the path %s\n", succeedFiles, path);
+        String msg2 = String.format("The files %s already exist in the path %s\n", existedFiles, path);
+        String msg3 = String.format("The files %s were failed to upload the path %s\n", failedFiles, path);
+        String msg = "";
+
+        if (!succeedFiles.isEmpty()) msg += msg1;
+        if (!existedFiles.isEmpty()) msg += msg2;
+        if (!failedFiles.isEmpty()) msg += msg3;
+
+        ResponseEntity responseEntity = ResponseEntity.status(HttpServletResponse.SC_OK).body(msg);
         return responseEntity;
     }
 }

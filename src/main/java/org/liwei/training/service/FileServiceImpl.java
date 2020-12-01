@@ -104,4 +104,20 @@ public class FileServiceImpl implements FileService {
 
         return isSuccess;
     }
+
+    @Override
+    public boolean isFileExist(String fileFullName) {
+        boolean fileExist = false;
+        File file = new File(fileFullName);
+        if (file.exists() && !file.isDirectory()) fileExist = true;
+        return fileExist;
+    }
+
+    @Override
+    public boolean isPathExist(String filePath) {
+        boolean pathExist = false;
+        File file = new File(filePath);
+        if (file.exists() && file.isDirectory()) pathExist = true;
+        return pathExist;
+    }
 }

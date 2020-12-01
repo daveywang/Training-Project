@@ -16,4 +16,6 @@ public interface FileService {
     String getFileUrl(String bucketName, String fileName);
     void createBucket(String bucketName);
     public boolean saveFile(MultipartFile multipartFile, String filePath);
+    public boolean isFileExist(String fileFullName);
+    public boolean isPathExist(String filePath);
 }
